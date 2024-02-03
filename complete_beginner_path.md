@@ -1,7 +1,15 @@
 These are my notes, answers, and writeups for all the rooms in the Complete Beginner Pathway.
 
 - [Metasploit: Introduction](#Metasploit-Introduction)
+  - [Questions](#Questions)
+    - [Task 2](#Task-2)
+    - [Task 3](#Task-3)
+    - [Task 4](#Task-4)
 - [Metasploit: Exploitation](#Metasploit-Exploitation)
+  - [Questions](#Questions)
+    - [Task 2](#Task-2)
+    - [Task 3](#Task-3)
+    - [Task 4](#Task-4)
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
@@ -28,7 +36,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - post - post-exploitation
 - `_` for single (in-line) payload, `/` for staged payload
 - **msfconsole** is context-based, meaning all module options settings (unless global) will be lost if the module is changed.
-- `setg` is `set` for global variables, likewise `unsetg` for `unset`
+- `setg` is `set` for global variables, likewise `unsetg` for `unsetg`
 - The exploitation process is 3 steps:
   1. Find the exploit
   1. Customize the exploit
@@ -48,6 +56,8 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - How would you search for a module related to Apache?
   > search apache
 - Who provided the auxiliary/scanner/ssh/ssh_login module?
+  
+  `info auxiliary/scanner/ssh/ssh_login`
   > todb
 ##### Task 4
 - How would you set the LPORT value to 6666?
@@ -60,4 +70,75 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > exploit
   
 ## Metasploit: Exploitation
+- `search portscan` - list port scanning modules
+- `nmap` scans can be made in `msfconsole` prompt
+- Metasploit is **NOT** fast.
+- NETBIOS (Network Basic Input Output System) allows computers to communicate over the network to share files or send files to printers.
+- The NetBIOS name of the target system can give you an idea about its role and importance.
+
+### Questions
+##### Task 2
+- How many ports are open on the target system?
+> 5
+- Using the relevant scanner, what NetBIOS name can you see?
+> ACME IT SUPPORT
+- What is running on port 8000?
+> webfs/1.21
+- What is the "penny" user's SMB password? Use the wordlist mentioned in the previous task. 
+> leo1234
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
