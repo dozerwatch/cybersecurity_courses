@@ -272,10 +272,27 @@ You can use the credentials below to simulate an initial compromise over SMB (Se
   ```
   > Trustno1
 - Where is the "secrets.txt"  file located? (Full path of the file)
+
+  For some reason, `search -f secrets.txt` was taking super long, so I went another route.
   ```
-  search -f secrets.txt
+  shell
+  cd ../..
+  dir /b/s secrets.txt
   ```
-  > 
+  > C:\Program Files (x86)\Windows Multimedia Platform\secrets.txt
+- What is the Twitter password revealed in the "secrets.txt" file?
+  ```
+  cat C:\Program Files (x86)\Windows Multimedia Platform\secrets.txt
+  ```
+  > KDSvbsw3849!
+- Where is the "realsecret.txt" file located? (Full path of the file)
+  ```
+  search -f realsecret.txt
+  ```
+  > c:\inetpub\wwwroot\realsecret.txt
+- What is the real secret?
+  > The Flash is the fastest man alive
+
 
 
 
