@@ -2,14 +2,8 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 
 - [Metasploit: Introduction](#Metasploit-Introduction)
   - [Questions](#Questions)
-    - [Task 2](#Task-2)
-    - [Task 3](#Task-3)
-    - [Task 4](#Task-4)
 - [Metasploit: Exploitation](#Metasploit-Exploitation)
-  - [Questions](#Metasploit-Exploitation-Questions)
-    - [Task 2](#Task-2)
-    - [Task 3](#Task-3)
-    - [Task 4](#Task-4)
+  - [Questions](#Questions-1)
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
