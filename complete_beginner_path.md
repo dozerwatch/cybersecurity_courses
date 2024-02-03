@@ -25,20 +25,25 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
     - stagers - set up connection between Metasploit and target system
     - stages - downloaded by stagers, allow for larger payloads
   - post - post-exploitation
-> [!NOTE]
-> `_` for single (in-line) payload, `/` for staged payload
-- **msfconsole** is context-based, meaning all module options settings will be lost if the module is changed.
-  - unless the settings are set as global
+- `_` for single (in-line) payload, `/` for staged payload
+- **msfconsole** is context-based, meaning all module options settings (unless global) will be lost if the module is changed.
+- `setg` is `set` for global variables, likewise `unsetg` for `unset`
 
 ### Questions
+##### Task 2
 - What is the name of the code taking advantage of a flaw on the target system?
-  - **Exploit**
+  > Exploit
 - What is the name of the code that runs on the target system to achieve the attacker's goal?
-  - **Payload**
+  > Payload
 - What are self-contained payloads called?
-  - **Singles**
+  > Singles
 - Is "windows/x64/pingback_reverse_tcp" among singles or staged payload?
-  - **Singles**
+  > Singles
+##### Task 3
+- How would you search for a module related to Apache?
+  > search apache
+- Who provided the auxiliary/scanner/ssh/ssh_login module?
+  > todb
    
   
 ## Metasploit: 
