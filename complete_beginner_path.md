@@ -1,6 +1,7 @@
 These are my notes, answers, and writeups for all the rooms in the Complete Beginner Pathway.
 
-- [Metasploit Introduction](#Metasploit-Introduction)
+- [Metasploit: Introduction](#Metasploit-Introduction)
+- [Metasploit: Exploitation](#Metasploit-Exploitation)
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
@@ -57,7 +58,6 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > unset payload
 - What command do you use to proceed with the exploitation phase?
   > exploit
-
-   
   
-## Metasploit: 
+## Metasploit: Exploitation
+
