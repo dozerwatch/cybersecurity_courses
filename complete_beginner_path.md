@@ -86,6 +86,9 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
     -  Once the host information is stored in the database, you can use `hosts -R` to add this value to the RHOSTS parameter.
 - Finding vulnerabilities using Metasploit rely heavily on your ability to scan and fingerprint the target.
 - Choosing a working payload could become a trial and error process.
+- `msfvenom` allows you to create payloads in many different formats for many different target systems.
+- `msfvenom --list formats` - lists supported output formats
+- **Meterpreter** is a powerful tool that offers a lot of easy to use features during the post-exploitation phase.
 
 ### Questions
 #### Task 2
