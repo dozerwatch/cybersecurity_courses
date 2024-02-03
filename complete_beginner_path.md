@@ -69,74 +69,41 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - Metasploit is **NOT** fast.
 - NETBIOS (Network Basic Input Output System) allows computers to communicate over the network to share files or send files to printers.
 - The NetBIOS name of the target system can give you an idea about its role and importance.
+- Real pentesting will likely have several targets.
+  - Metasploit has a database function to simplify project management and avoid possible confusion when setting up parameter values.
+    - Start a PostgreSQL database
+      ```
+      systemctl start postgresq
+      msfdb init
+      msfconsole
+      db_status
+      ```
+    - The database feature will allow you to create workspaces to isolate different projects.
+    - `workspace` - list available workspaces, use `-h` for help
+    -  `db_nmap` - runs `nmap`, saving result to database
+    -  `hosts`, `services` - information relevant to hosts and services running on target systems
+    -  Once the host information is stored in the database, you can use `hosts -R` to add this value to the RHOSTS parameter.
 
 ### Questions
 ##### Task 2
 - How many ports are open on the target system?
-
-  `nmap -sC -sV -Pn -T5 -p- <ip>`
+  `nmap <ip>`
   > 5
 - Using the relevant scanner, what NetBIOS name can you see?
+  ```
+  
+  ```
   > ACME IT SUPPORT
 - What is running on port 8000?
+  ```
+  
+  ```
   > webfs/1.21
 - What is the "penny" user's SMB password? Use the wordlist mentioned in the previous task.
-
   ```
   
   ```
   > leo1234
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
