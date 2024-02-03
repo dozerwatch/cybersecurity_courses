@@ -37,7 +37,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   1. Exploit the vulnerable service
 
 ### Questions
-##### Task 2
+#### Task 2
 - What is the name of the code taking advantage of a flaw on the target system?
   > Exploit
 - What is the name of the code that runs on the target system to achieve the attacker's goal?
@@ -46,7 +46,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > Singles
 - Is "windows/x64/pingback_reverse_tcp" among singles or staged payload?
   > Singles
-##### Task 3
+#### Task 3
 - How would you search for a module related to Apache?
   > search apache
 - Who provided the auxiliary/scanner/ssh/ssh_login module?
@@ -54,7 +54,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   info auxiliary/scanner/ssh/ssh_login
   ```
   > todb
-##### Task 4
+#### Task 4
 - How would you set the LPORT value to 6666?
   > set LPORT 6666
 - How would you set the global value for RHOSTS to 10.10.19.23 ?
@@ -88,7 +88,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - Choosing a working payload could become a trial and error process.
 
 ### Questions
-##### Task 2
+#### Task 2
 - How many ports are open on the target system?
   ```
   nmap <target_ip>
@@ -117,7 +117,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   run
   ```
   > leo1234
-##### Task 5
+#### Task 5
 - Exploit one of the critical vulnerabilities on the target VM
   ```
   use exploit/windows/smb/ms17_010_eternalblue
