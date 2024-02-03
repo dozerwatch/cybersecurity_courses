@@ -6,7 +6,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
     - [Task 3](#Task-3)
     - [Task 4](#Task-4)
 - [Metasploit: Exploitation](#Metasploit-Exploitation)
-  - [Questions](#Questions)
+  - [Questions](#Metasploit-Exploitation-Questions)
     - [Task 2](#Task-2)
     - [Task 3](#Task-3)
     - [Task 4](#Task-4)
