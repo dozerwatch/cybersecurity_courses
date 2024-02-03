@@ -50,8 +50,9 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - How would you search for a module related to Apache?
   > search apache
 - Who provided the auxiliary/scanner/ssh/ssh_login module?
-  
-  `info auxiliary/scanner/ssh/ssh_login`
+  ```
+  info auxiliary/scanner/ssh/ssh_login
+  ```
   > todb
 ##### Task 4
 - How would you set the LPORT value to 6666?
@@ -89,7 +90,9 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 ### Questions
 ##### Task 2
 - How many ports are open on the target system?
-  `nmap <target_ip>`
+  ```
+  nmap <target_ip>
+  ```
   > 5
 - Using the relevant scanner, what NetBIOS name can you see?
   ```
