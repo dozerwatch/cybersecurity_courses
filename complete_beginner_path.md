@@ -1,8 +1,11 @@
 These are my notes, answers, and writeups for all the rooms in the Complete Beginner Pathway.
 
 - [Metasploit: Introduction](#Metasploit-Introduction)
+  - [Questions](#Questions)
 - [Metasploit: Exploitation](#Metasploit-Exploitation)
+  - [Questions](#Questions-1)
 - [Metasploit: Meterpreter](#Metasploit-Meterpreter)
+  - [Questions](#Questions-2)
 
 # Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
