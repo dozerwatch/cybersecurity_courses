@@ -73,13 +73,19 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 ### Questions
 ##### Task 2
 - How many ports are open on the target system?
-> 5
+
+  `nmap -sC -sV -Pn -T5 -p- <ip>`
+  > 5
 - Using the relevant scanner, what NetBIOS name can you see?
-> ACME IT SUPPORT
+  > ACME IT SUPPORT
 - What is running on port 8000?
-> webfs/1.21
-- What is the "penny" user's SMB password? Use the wordlist mentioned in the previous task. 
-> leo1234
+  > webfs/1.21
+- What is the "penny" user's SMB password? Use the wordlist mentioned in the previous task.
+
+  ```
+  
+  ```
+  > leo1234
 
 
 
