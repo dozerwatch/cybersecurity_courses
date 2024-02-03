@@ -4,7 +4,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - [Metasploit: Exploitation](#Metasploit-Exploitation)
 - [Metasploit: Meterpreter](#Metasploit-Meterpreter)
 
-## Metasploit: Introduction
+# Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
 - **Metasploit Framework** is the open-source version that works from the command line.
 - Main Components
@@ -63,7 +63,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - What command do you use to proceed with the exploitation phase?
   > exploit
   
-## Metasploit: Exploitation
+# Metasploit: Exploitation
 - `search portscan` - list port scanning modules
 - `nmap` scans can be made in `msfconsole` prompt
 - Metasploit is **NOT** fast.
@@ -177,7 +177,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   ```
   > $6$qK0Kt4UO$HuCrlOJGbBJb5Av9SL7rEzbxcz/KZYFkMwUqAE0ZMDpNRmOHhPHeI2JU3m9OBOS7lUKkKMADLxCBcywzIxl7b.
 
-## Metasploit: Meterpreter
+# Metasploit: Meterpreter
 
 ### Questions
 #### Task 
