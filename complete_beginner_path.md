@@ -28,6 +28,10 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - `_` for single (in-line) payload, `/` for staged payload
 - **msfconsole** is context-based, meaning all module options settings (unless global) will be lost if the module is changed.
 - `setg` is `set` for global variables, likewise `unsetg` for `unset`
+- The exploitation process is 3 steps:
+  1. Find the exploit
+  1. Customize the exploit
+  1. Exploit the vulnerable service
 
 ### Questions
 ##### Task 2
@@ -44,6 +48,16 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > search apache
 - Who provided the auxiliary/scanner/ssh/ssh_login module?
   > todb
+##### Task 4
+- How would you set the LPORT value to 6666?
+  > set LPORT 6666
+- How would you set the global value for RHOSTS to 10.10.19.23 ?
+  > setg RHOSTS 10.10.19.23
+- What command would you use to clear a set payload?
+  > unset payload
+- What command do you use to proceed with the exploitation phase?
+  > exploit
+
    
   
 ## Metasploit: 
