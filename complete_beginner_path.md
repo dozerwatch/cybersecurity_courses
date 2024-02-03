@@ -4,6 +4,8 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - [Questions](#Questions)
 - [Metasploit: Exploitation](#Metasploit-Exploitation)
   - [Questions](#Questions-1)
+- [Metasploit: Meterpreter](#Metasploit-Meterpreter)
+  - [Questions](#Questions-2)
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
@@ -177,3 +179,8 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   run
   ```
   > $6$qK0Kt4UO$HuCrlOJGbBJb5Av9SL7rEzbxcz/KZYFkMwUqAE0ZMDpNRmOHhPHeI2JU3m9OBOS7lUKkKMADLxCBcywzIxl7b.
+
+## Metasploit: Meterpreter
+
+### Questions
+#### Task 
