@@ -124,7 +124,9 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   ```
 - What is the content of the flag.txt file?
   ```
-
+  cd ../..
+  dir /b/s flag.txt
+  type C:\Users\Jon\Documents\flag.txt
   ```
   > THM-5455554845
 - What is the NTLM hash of the password of the user "pirate"?
