@@ -195,6 +195,21 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - **Inline** payloads are sent in a single step.
 - Meterpreter payloads are also divided into staged and inline versions.
 - `msfvenom --list payloads | grep meterpreter` - list available Meterpreter versions
+- Three factors for deciding which Meterpreter version to use:
+  - target OS
+  - components available on target system (Is python installed? IS this a php website?)
+  - network connection types available on target system
+- running `help` is always a good idea
+- Meterpreter provides three primary categories of tools;
+  - Built-in commands
+  - Meterpreter tools
+  - Meterpreter scripting
+- `getuid` - display the user with which Meterpreter is currently running, gives idea of possible privilege level on the target system
+- `ps` - list running processes, give PID information for migration
+- `migrate <PID>`
+  - Migrating to another process will help Meterpreter interact with it
+  - For example, if you see a word processor running on the target, you can migrate to it and start capturing keystrokes sent by the user to this process.
+  - Migrating to another process may also help you to have a more stable Meterpreter session.
   
 ## Questions
 ### Task 
