@@ -183,11 +183,18 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 # Metasploit: Meterpreter
 - **Meterpreter** is a Metasploit payload
   - runs on **target** system, but is not installed on it
-    - runs in RAM and does not write itself to disk to avoid detection by antivirus
+    - runs in **RAM** and does not write itself to disk to avoid detection by antivirus
       - antivirus software scan new files on disk by default
-    - seen as a process, not a file
-  - uses encrypted communication to try to avoid IPS, IDS detection
+    - seen as a **process**, not a file
+  - uses **encrypted communication** to try to avoid IPS, IDS detection
   - **?** acts as an agent within a command and control architecture
-
+- Most antivirus software will detect Meterpreter.
+- **Staged** payloads are sent in two steps:
+  1. An initial payload (stager) is sent.
+  2. This stager requests the rest of the payload.
+- **Inline** payloads are sent in a single step.
+- Meterpreter payloads are also divided into staged and inline versions.
+- `msfvenom --list payloads | grep meterpreter` - list available Meterpreter versions
+  
 ## Questions
 ### Task 
