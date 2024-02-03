@@ -217,7 +217,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - Passwords are store in NTLM (New Technology LAN Manager) format.
 - `search -f` - locate files
 - `shell` - launch regular command-line shell on target system
-- Post-exploitation phase will have several goals:
+- Goals of post-exploitation phase:
   - Gathering further information about the target system.
   - Looking for interesting files, user credentials, additional network interfaces, and generally interesting information on the target system.
   - Privilege escalation.
