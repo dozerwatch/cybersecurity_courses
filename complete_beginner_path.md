@@ -83,6 +83,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
     -  `db_nmap` - runs `nmap`, saving result to database
     -  `hosts`, `services` - information relevant to hosts and services running on target systems
     -  Once the host information is stored in the database, you can use `hosts -R` to add this value to the RHOSTS parameter.
+- Finding vulnerabilities using Metasploit rely heavily on your ability to scan and fingerprint the target.
 
 ### Questions
 ##### Task 2
@@ -91,17 +92,25 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > 5
 - Using the relevant scanner, what NetBIOS name can you see?
   ```
-  
+  use auxiliary/scanner/netbios/nbname
+  set rhosts <ip>
+  run
   ```
   > ACME IT SUPPORT
 - What is running on port 8000?
   ```
-  
+  use auxiliary/scanner/http/http_version
+  set rhosts <ip>
+  run
   ```
   > webfs/1.21
 - What is the "penny" user's SMB password? Use the wordlist mentioned in the previous task.
   ```
-  
+  use auxiliary/scanner/smb/smb_login
+  set rhosts <ip>
+  set pass_file <pass_file>
+  set smbuser penny
+  run
   ```
   > leo1234
 
