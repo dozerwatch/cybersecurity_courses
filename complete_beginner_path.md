@@ -210,6 +210,13 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - Migrating to another process will help Meterpreter interact with it
   - For example, if you see a word processor running on the target, you can migrate to it and start capturing keystrokes sent by the user to this process.
   - Migrating to another process may also help you to have a more stable Meterpreter session.
+> [!CAUTION]
+> You may lose your user privileges if you migrate from a higher privileged user to a process started by a lower privileged user.
+- `hashdump` - list content of the SAM database
+  - SAM (Security Account Manager) stores user passwords on Windows systems.
+  - Passwords are store in NTLM (New Technology LAN Manager) format.
+- `search -f` - locate files
+- `shell` - launch regular command-line shell on target system
   
 ## Questions
 ### Task 
