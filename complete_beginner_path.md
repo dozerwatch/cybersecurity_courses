@@ -37,7 +37,6 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   1. Find the exploit
   1. Customize the exploit
   1. Exploit the vulnerable service
-
 ## Questions
 ### Task 2
 - What is the name of the code taking advantage of a flaw on the target system?
@@ -95,7 +94,6 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - used to recieve incoming connection from payload
     - set up handler accordingly with payload, lhost, lport of payload, same values
 - **Meterpreter** is a powerful tool that offers a lot of easy to use features during the post-exploitation phase.
-
 ## Questions
 ### Task 2
 - How many ports are open on the target system?
@@ -181,6 +179,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > $6$qK0Kt4UO$HuCrlOJGbBJb5Av9SL7rEzbxcz/KZYFkMwUqAE0ZMDpNRmOHhPHeI2JU3m9OBOS7lUKkKMADLxCBcywzIxl7b.
 
 # Metasploit: Meterpreter
+-
 
 ## Questions
 ### Task 
