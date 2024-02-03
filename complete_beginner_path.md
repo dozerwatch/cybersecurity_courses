@@ -173,7 +173,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   ```
   background
   use post/linux/gather/hashdump
-  set session <#>
+  set session <num>
   run
   ```
   > $6$qK0Kt4UO$HuCrlOJGbBJb5Av9SL7rEzbxcz/KZYFkMwUqAE0ZMDpNRmOHhPHeI2JU3m9OBOS7lUKkKMADLxCBcywzIxl7b.
