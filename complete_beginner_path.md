@@ -108,6 +108,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   ```
   use auxiliary/scanner/http/http_version
   set rhosts <target_ip>
+  set lport 8000
   run
   ```
   > webfs/1.21
