@@ -21,7 +21,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - encoder - encode exploit and payload to bypass signature-based antivirus
   - evasion - evade antivirus software
   - exploits
-  - NOP - does thing 
+  - NOP - does nothing 
   - payload
     - singles - don't need to download additional components to run
     - **?** adapters - wrap single payloads
