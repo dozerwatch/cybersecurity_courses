@@ -1,15 +1,25 @@
 These are my notes, answers, and writeups for all the rooms in the Complete Beginner Pathway.
+- [Starting Out In CyberSec](#starting-out-in-cybersec)
+- [Metasploit: Introduction](#metasploit-introduction)
+- [Metasploit: Exploitation](#metasploit-exploitation)
+- [Metasploit: Meterpreter](#metasploit-meterpreter)
+- [Blue](#blue)
+- [Steel Mountain](#steel-mountain)
 
-- [Metasploit: Introduction](#Metasploit-Introduction)
-  - [Questions](#Questions)
-- [Metasploit: Exploitation](#Metasploit-Exploitation)
-  - [Questions](#Questions-1)
-- [Metasploit: Meterpreter](#Metasploit-Meterpreter)
-  - [Questions](#Questions-2)
-- [Blue](#Blue)
-- [Steel Mountain](#Steel-Mountain)
+## Starting Out In CyberSec
+- **Offensive Security**
+  - involves attacking applications and technologies to discover vulnerabilites
+  - most common job is penetration tester
+    - person legally employed by organization to find vulns in their products
+- **Defensive Security**
+  - involves detecting and stopping attacks
+  - security analyst
+    - monitors systems and detects when they're being attacked
+  - incident responder
+    - brought in when attack has already happened
+    - responsible for understanding the attack and its impacts
 
-# Metasploit: Introduction
+## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
 - **Metasploit Framework** is the open-source version that works from the command line.
 - Main Components
@@ -39,9 +49,9 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   1. Find the exploit
   1. Customize the exploit
   1. Exploit the vulnerable service
-     
-## Questions
-### Task 2
+    
+### Questions
+#### Task 2
 - What is the name of the code taking advantage of a flaw on the target system?
   > Exploit
 - What is the name of the code that runs on the target system to achieve the attacker's goal?
@@ -50,7 +60,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   > Singles
 - Is "windows/x64/pingback_reverse_tcp" among singles or staged payload?
   > Singles
-### Task 3
+#### Task 3
 - How would you search for a module related to Apache?
   > search apache
 - Who provided the auxiliary/scanner/ssh/ssh_login module?
@@ -58,7 +68,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   info auxiliary/scanner/ssh/ssh_login
   ```
   > todb
-### Task 4
+#### Task 4
 - How would you set the LPORT value to 6666?
   > set LPORT 6666
 - How would you set the global value for RHOSTS to 10.10.19.23 ?
@@ -68,7 +78,7 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
 - What command do you use to proceed with the exploitation phase?
   > exploit
   
-# Metasploit: Exploitation
+## Metasploit: Exploitation
 - `search portscan` - list port scanning modules
 - `nmap` scans can be made in `msfconsole` prompt
 - Metasploit is **NOT** fast.
