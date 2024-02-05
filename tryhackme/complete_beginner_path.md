@@ -1,9 +1,30 @@
 These are my notes, answers, and writeups for all the rooms in the Complete Beginner Pathway.
+
+Complete Beginner Introduction
 - [Starting Out In CyberSec](#starting-out-in-cybersec)
+- [Introductory Researching](#introductory-researching)
+
+Linux Foundamentals
+- [Linux Foundamentals Part 1](#linux-foundamentals-part-1)
+- [Linux Foundamentals Part 2](#linux-foundamentals-part-2)
+- [Linux Foundamentals Part 3](#linux-foundamentals-part-3)
+
+Network Exploitation Basics
+- [Introductory Networking](#introductory-networking)
+
+Web Hacking Fundamentals
+
+Cryptography
+
+Windows Exploitation Basics
 - [Metasploit: Introduction](#metasploit-introduction)
 - [Metasploit: Exploitation](#metasploit-exploitation)
 - [Metasploit: Meterpreter](#metasploit-meterpreter)
 - [Blue](#blue)
+
+Shells and Privilege Escalation
+
+Basic Computer Exploitation
 - [Steel Mountain](#steel-mountain)
 
 ## Starting Out In CyberSec
@@ -18,6 +39,69 @@ These are my notes, answers, and writeups for all the rooms in the Complete Begi
   - incident responder
     - brought in when attack has already happened
     - responsible for understanding the attack and its impacts
+  - malware analysis
+
+## Introductory Researching
+- the ability to ***research efficiently*** is the most important quality for a hacker to have
+- hacking requires a *vast* knowledge base
+- helpful resouces for specific software exploits:
+  - [Exploit-DB](https://www.exploit-db.com/) - contains exploits
+  - [NVD](https://nvd.nist.gov/vuln/search) - keeps track of CVEs
+  - `searchsploit` - CLI version of Exploit-DB
+  - `man`
+
+## Linux Foundamentals Part 1
+- **Linux OS** is one of the most popular in the world 
+- powers smart cars, android devices, supercomputers, home appliances, enterprise servers, and more
+- umbrella term for multiple OS's that are based on **UNIX**
+- `find -name <file> <dir>` - recursively look for `<file>` in `<dir>`
+- `&` - run commands in background
+
+## Linux Foundamentals Part 2
+- Directories
+  - `/etc` - store system files used by OS
+    - system files are files essential for a computer system to function properly
+    - ex: `shadow`, `passwd`
+  - `/var` - stores data that is frequently accessed or written by services or applications running on the system 
+    - ex: `log`, `opt`
+  - `/root` - home for root user
+  - `/tmp` - store data that is only needed to be accessed once or twice
+    - any user can write to this folder by default
+
+## Linux Foundamentals Part 3
+- `scp <src> <dst>` - securely copy files
+  - allows you to transfer files between two computers using the SSH protocol
+- Processes are the programs running on the computer and are managed by the kernal.
+- `ps aux` - also view processes run by other users and system processes
+- `top` - real time statistics about processes
+- You can send signals to `kill <PID>` a process
+  - SIGTERM - allow cleanup
+  - SIGKILL - no cleanup
+  - SIGSTOP - stop a process
+- The OS use **namespaces** to split computer resources to processes
+  - namespaces isolate processes from one another
+    - only those in the same namespace can see each other
+- Process with PID 0 is started when system boots
+- `systemd` is one of the first processes to start
+  - manages user processes
+  - sits between OS and user
+  - any process we start will be a **children** of `systemd`
+- `systemctl [option] [service]` allows us to interact with `systemd` process
+  - there are 4 options: `start`, `stop`, `enable`, and `disable`
+- Processes can run in the background or foreground
+- the `cron` process allows us to schedule tasks
+  - we interact with it through `crontabs`
+    - a file with formatting recognised by `cron` to execute each line step-by-step
+    - process started during boot
+
+## Introductory Networking
+- Real-world networking is based off TCP/IP model
+- OSI (Open Systems Interconnection) Model
+  - standardised model used to demonstrate theory behind networking
+  ```
+  7. Application - provides interface for programs to transmit data
+  6. Presentation - translate data into standardized format, 
+  ```
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
