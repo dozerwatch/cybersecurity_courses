@@ -16,6 +16,9 @@ Network Exploitation Basics
   - [Networking Tools](#networking-tools)
 - [Nmap](#nmap)
   - [Ports](#ports)
+  - [Scan Types](#scan-types)
+- [Network Services](#network-services)
+  - [Server Message Block](#)
 
 Web Hacking Fundamentals
 
@@ -202,7 +205,15 @@ Basic Computer Exploitation
   - sends `ICMP` packet to each IP address for network
   - finds active hosts
   - sends `SYN` to port 443, `ACK` to port 80
+- `-Pn` 
+  - don't ping hosts before scanning
+  - used to bypass firewalls which block ICMP packets
 
+## Network Services
+### Server Message Block 
+- SMB: a client-server communication protocol used for sharing access to files, printers, and other resources on a network
+- `enum4linux -a <ip>` enumerate SMB shares
+- `smbclient //<ip>/<share> -U <user> -p <port>` access resources on server
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
