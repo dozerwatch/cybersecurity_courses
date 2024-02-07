@@ -2,7 +2,7 @@
 
 How many services are running under port 1000?
 ```
-nmap -sC -sV -A <target ip>
+nmap --script=vuln -sV -A <target ip>
 ```
 > 2
 
@@ -70,3 +70,9 @@ cd /root
 cat root.txt
 ```
 > W3ll d0n3. You made it!
+
+Challenges that I had:
+1. I forgot to use `gobuster`, so I spent quite a bit of time testing out all the CVEs from my `nmap` result.
+2. I had trouble with `ssh`ing into the mitch user account because I forgot to use ports.
+
+For all of the above challenges, I looked up writeups for them.
