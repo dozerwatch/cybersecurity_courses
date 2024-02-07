@@ -36,10 +36,13 @@ Output:
 > secret
 
 Where can you login with the details obtained?
-
+> ssh
 
 What's the user flag?
-
+```
+ssh mitch@<target_ip> -p2222
+```
+> G00d j0b, keep up!
 
 Is there any other user in the home directory? What's its name?
 
