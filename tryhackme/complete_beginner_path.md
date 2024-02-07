@@ -11,6 +11,11 @@ Linux Foundamentals
 
 Network Exploitation Basics
 - [Introductory Networking](#introductory-networking)
+  - [Encapsulation](#encapsulation)
+  - [The TCP/IP Model](#the-tcpip-model)
+  - [Networking Tools](#networking-tools)
+- [Nmap](#nmap)
+  - [Ports](#ports)
 
 Web Hacking Fundamentals
 
@@ -99,9 +104,105 @@ Basic Computer Exploitation
 - OSI (Open Systems Interconnection) Model
   - standardised model used to demonstrate theory behind networking
   ```
-  7. Application - provides interface for programs to transmit data
-  6. Presentation - translate data into standardized format, 
+  7. Application 
+      - provide interface for programs to transmit data
+      - provide networking options for programs
+  6. Presentation 
+      - translate data into standardized format
+      - handle encryptions, compressons, and other transformations
+  5. Session
+      - create and maintain a unique connection with remote computer 
+  4. Transport
+      - choose protocol (TCP, UDP, ...)
+      - divide data into segments (TCP) or datagrams (UDP)
+  3. Network
+      - find fasetest route to IP address
+  2. Data Link
+      - add MAC address
+      - check recieved data isn't corrupted
+  1. Physical
+      - translate binary data into signals and vice versa
+      - send and recieve signals
   ```
+
+### Encapsulation
+- the **process** by which data is **sent** from one computer to another
+- as data is passed down each layer, more information is added to the start
+- in Data Link, information is appended to the end, too, for the recieving computer to verify that the data was not corrupted during transmission
+- **de-encapsulation** - the reverse of encapsulation, done by recieving computer to read the data
+- encapsulated data names: data, segments/datagrams, packets, frames, bits
+
+### The TCP/IP Model
+- basis for real world networking
+- **Application**: application, presentation, session
+- **Transport**: transport
+- **Internet**: network
+- **Network Interface**: data link, physical
+
+### Networking Tools
+- `ping <dst>` 
+  - checks if a connection to a remote system is possible
+  - uses ICMP protocol, which operates on Network layer
+- `traceroute <dst>`
+  - maps the route your request takes to the remote system
+  - Windows `tracert` uses ICMP
+  - Linux uses UDP
+- `whois <domain>`
+  - query who a domain name is registered to
+- `dig <domain> @<dns-server-ip>`
+  - query recursive DNS servers
+- **Domain Name System (DNS)**
+  - a TCP/IP protocol
+  - Order is as follows:
+    1. Local Host files
+    2. Local DNS cache
+    3. Recursive DNS server
+    4. Root name server
+        - Top-level domain servers (.com, .net, ...)
+          - Authoritative name servers - source of information
+
+## Nmap
+- proper enumeration is extremely important
+- **port scanning** - find what services are running on target system
+- `nmap` connects to each port and determines if it's open, closed, or filtered
+  - then it enumerates which services are running on each open port
+### Ports
+- when a computer runs a network service, it opens a port to recieve connections
+- ports are necessary for making **multiple network requests** or having **multiple services running**
+- network connections are made between two ports
+- there are total of **65535** ports on each computer
+### Scan Types
+- `-sT` TCP
+  - sends `syn`
+  - OPEN: gets back `syn/ack`, sends `ack`
+  - CLOSED: gets back `rst`
+  - FILTERED: gets back nothing (protected by firewall)
+- `-sS` SYN 
+  - sends `syn`
+  - OPEN: gets back `syn/ack`, sends `rst`
+  - CLOSED: gets back `rst`
+  - FILTERED: gets back nothing (protected by firewall)
+- `-sU` UDP
+  - OPEN: gets back nothing or `UDP` packet
+  - CLOSED: gets back `ICMP` packet
+  - FILTERED: gets back nothing
+- `-sN` TCP NULL
+  - sends TCP request with no flags
+  - OPEN|FILTERED: gets back nothing
+  - CLOSED: gets back `rst`
+- `-sF` TCP FIN
+  - sends TCP request with `FIN` flag
+  - OPEN|FILTERED: gets back nothing
+  - CLOSED: gets back `rst`
+- `-sX` TCP Xmas
+  - sends TCP request with `PSH, URG, FIN` flags
+  - OPEN|FILTERED: gets back nothing
+  - CLOSED: gets back `rst`
+- `-sN` Ping Sweep
+  - sends `ICMP` packet to each IP address for network
+  - finds active hosts
+  - sends `SYN` to port 443, `ACK` to port 80
+
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
