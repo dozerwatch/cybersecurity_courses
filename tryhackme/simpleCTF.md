@@ -2,7 +2,7 @@
 
 How many services are running under port 1000?
 ```
-nmap --script=vuln -sV -A <target ip>
+nmap -sC -sV -A <target ip>
 ```
 > 2
 
