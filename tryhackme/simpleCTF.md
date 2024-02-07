@@ -45,10 +45,19 @@ ssh mitch@<target_ip> -p2222
 > G00d j0b, keep up!
 
 Is there any other user in the home directory? What's its name?
-
+```
+cd /home
+```
+> sunbath
 
 What can you leverage to spawn a privileged shell?
+```
 
+```
+> 
 
 What's the root flag?
+```
 
+```
+> 
