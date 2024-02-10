@@ -6,4 +6,4 @@ A collection of notes and solutions to dojos in pwn.college. Since pwn.college h
 - [Fundamentals](https://github.com/dozerwatch/cybersecurity_courses/blob/main/pwncollege/fundamentals.md)
 
 ## Courses
-- [CSE 365 - Spring 2024](https://github.com/dozerwatch/cybersecurity_courses/blob/main/pwncollege/cse365_s24.md)
+- [CSE 365 - Spring 2024](https://github.com/dozerwatch/cybersecurity_courses/blob/main/pwncollege/cse365_s24.md)–
