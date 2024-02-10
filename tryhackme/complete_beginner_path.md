@@ -18,7 +18,7 @@ Network Exploitation Basics
   - [Ports](#ports)
   - [Scan Types](#scan-types)
 - [Network Services](#network-services)
-  - [Server Message Block](#)
+  - [Server Message Block](#server-message-block)
 
 Web Hacking Fundamentals
 
@@ -214,6 +214,7 @@ Basic Computer Exploitation
 - SMB: a client-server communication protocol used for sharing access to files, printers, and other resources on a network
 - `enum4linux -a <ip>` enumerate SMB shares
 - `smbclient //<ip>/<share> -U <user> -p <port>` access resources on server
+
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
