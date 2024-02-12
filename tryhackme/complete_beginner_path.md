@@ -32,7 +32,7 @@ Web Hacking Fundamentals
   - [Bypassing Server Side Filtering](#bypassing-server-side-filtering)
   - [Example Methodology](#example-methodology)
   - [Challenge](#challenge)
-- [Pickle Rick](#pickle-rick)
+- [Pickle Rick](/tryhackme/pickle_rick.md)
 
 Cryptography
 
@@ -332,9 +332,6 @@ cd /var/www
 cat flag.txt
 ```
 > THM{NzRlYTUwNTIzODMwMWZhMzBiY2JlZWU2}
-
-## Pickle Rick
-- 
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
