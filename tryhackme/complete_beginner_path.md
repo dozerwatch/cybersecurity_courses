@@ -24,6 +24,15 @@ Network Exploitation Basics
   - [Network File System](#network-file-system)
 
 Web Hacking Fundamentals
+- [Upload Vulnerabilities](#upload-vulnerabilities)
+  - [Overwriting Existing Files](#overwriting-existing-files)
+  - [Remote Code Execution](#remote-code-execution)
+  - [Filtering](#filtering)
+  - [Bypassing Client Side Filtering](#bypassing-client-side-filtering)
+  - [Bypassing Server Side Filtering](#bypassing-server-side-filtering)
+  - [Example Methodology](#example-methodology)
+  - [Challenge](#challenge)
+- [Pickle Rick](#pickle-rick)
 
 Cryptography
 
@@ -246,6 +255,86 @@ Basic Computer Exploitation
 - `showmount -e <ip>` list NFS shares
 - `sudo mount -t nfs IP:share /tmp/mount/ -nolock` connect NFS share to mount point
 - The exploit here is **root squash**, which prevents root access, is turned off.
+
+## Upload Vulnerabilities
+- An attacker with the ability to upload a file of their choice with no restrictions is very dangerous.
+### Overwriting Existing Files
+- When files are uploaded to a server, it must be checked that it doesn't overwrite any files already on the server.
+  - assign new name to file
+  - return an error if filename already exists
+  - Permissions should be properly assigne; webpages should not be writable for a web user
+### Remote Code Execution
+- Upload a shell written in the same language as the back-end of the website and activate it by
+  - navigating directly to it (non-routed)
+  - forcing webapp to run it (routed)
+- In a routed application, (routes are defined programmatically rather than being mapped to the file-system), this attack becomes more complicated and less likely to occur. 
+  - Most modern web frameworks are routed programmatically.
+- There are two basic ways to achieve RCE on a webserver when exploiting a file upload vulnerability: webshells and reverse/bind shells.
+- A simple PHP webshell works by taking a parameter and executing it as a system command.
+  ```
+  <?php
+    echo system($_GET["cmd"]);
+  ?>
+  ```
+- This code takes a GET parameter and executes it as a system command. It then echoes the output out to the screen.
+### Filtering
+- Extension Validation
+  - Blacklist - list of extensions not allowed, rest allowed
+  - Whitelist - list of extensions allowed, rest not allowed
+- File Type Filtering
+  - verify contents of file are acceptable for upload
+  - MIME validation (Multipurpose Internet Mail Extension)
+    - the Content-Type value
+  - Magic Number Validation
+- File Length Filtering
+- File Name Filtering
+  - File names should be unique
+    - random data could be added to file name
+  - File is sanitised
+    - remove problematic characters
+  - Our uploaded file is unlikely to have the same name as before uploading
+- These filters are usually used in conjunction with each other.
+- These filters can be used both client-side and server-side.
+### Bypassing Client-Side Filtering
+- Turn off Javascript in browser
+- Intercept and modify page
+  - use Burpsuite to intercept and remove Javascript
+- Intercept and modify file upload
+  - use Burpsuite to change Content-Type and file extension
+- Send file directly to upload point
+  - Use `curl` 
+### Bypassing Server-Side Filtering
+- File extensions: 
+  - use a variety of valid file extensions `.php`, `.phtml` `...`
+  - use multiple file extension `.jpg.php`
+- Magic numbers:
+  - Change magic numbers with `hexeditor` to magic numbers of file type that are accepted
+### Example Methodology
+1. Find out what language and frameworks the website is built with.
+    - look for headers `server` or `x-powered-by`
+2. Look for vectors of attack
+3. Look for filterings
+4. Attempt innocent file upload and see how file is accessed
+5. Attempt malicious file upload
+
+### Challenge
+1. Using Wappalyzer, we see that the framework is Express, so we know we need a Javascript shell.
+2. Using `gobuster`, we see an `/admin` page which will be used to execute our uploaded shell. We also see a `/content` and `/module` page, which lead to nowhere as of right now.
+3. The source code tells us there is an `/upload.js` client-side filtering. We can get remove this in Burpsuite to bypass the client-side filtering. 
+4. While using Burpsuite, we see that there are `.jpg` files inside of the `/content` page, so this must be where the images are being uploaded to.
+5. We attempt to upload our script, but it's blocked, so we know there is a server-side filtering. The server-side filtering has a whitelist for `.jpg` file extensions. Change the file extension of our shell program from `.js` to `.jpg`.
+6. Upload the exploit and run `gobuster dir -x .jpg -u http://jewel.uploadvulns.thm/content -w <task_file>` to find all `.jpg` files in `/content` page.
+7. Open a netcat listener and on `/admin`, try all files with `../content/<jpg>` until one is successful. If you were recording all the `.jpg` files in Burpsuite, one of new files is your exploit.
+
+Hack the machine and grab the flag from /var/www/
+```
+cd /var/www
+cat flag.txt
+```
+> THM{NzRlYTUwNTIzODMwMWZhMzBiY2JlZWU2}
+
+## Pickle Rick
+- 
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
