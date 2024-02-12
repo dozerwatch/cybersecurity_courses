@@ -19,6 +19,9 @@ Network Exploitation Basics
   - [Scan Types](#scan-types)
 - [Network Services](#network-services)
   - [Server Message Block](#server-message-block)
+  - [Telnet](#telnet)
+  - [File Transfer Protocol](#file-transfer-protocol)
+  - [Network File System](#network-file-system)
 
 Web Hacking Fundamentals
 
@@ -211,10 +214,38 @@ Basic Computer Exploitation
 
 ## Network Services
 ### Server Message Block 
-- SMB: a client-server communication protocol used for sharing access to files, printers, and other resources on a network
+- A client-server communication protocol used for sharing access to files, printers, and other resources on a network
+  - the protocol is a response-request protocol, meaning you transmite multiple messages between client and server to establish a connection
+- SMB share drives on a server can be connected to and used to view or transfer files
 - `enum4linux -a <ip>` enumerate SMB shares
 - `smbclient //<ip>/<share> -U <user> -p <port>` access resources on server
+- The **exploit** is anonymous SMB share access
+  - a common misconfiguration that can allow us to gain information that will lead to a shell
 
+### Telnet
+- An application protocols that allows you to connect to and execute commands on a remote machiine that's hosting a telnet server
+- Telnet does not encrypt data
+- `telnet <ip> <port>` to connect to a telnet server
+- The **exploit** is the telnet server allows execution of system commands and connect back to our local server.
+
+###  File Transfer Protocol
+- A protocol that allows remote transfer of files over a network.
+- uses a client-server model
+  - client initiates a connection
+  - server validates login credentials and opens a session
+- FTP sessions operate using two channels: command and data
+  - both channels are unencrypted
+- supports an Active or Passive connection, or both
+  - Active: client listens, server connects
+- The **exploit** is anonymous FTP login which gives us a username and we use `hydra` to bruteforce the password.
+
+### Network File System
+- NFS allows a system to share directories and files with other systems over a network.
+- Mounts all or a portion of a file system on a server
+  - Mounting is a process by which a computer's operating system makes files and directories on a storage device available for users to access via the computer's file system.
+- `showmount -e <ip>` list NFS shares
+- `sudo mount -t nfs IP:share /tmp/mount/ -nolock` connect NFS share to mount point
+- The exploit here is **root squash**, which prevents root access, is turned off.
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
