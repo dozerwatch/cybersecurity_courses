@@ -52,6 +52,9 @@ Shells and Privilege Escalation
   - [Privilege Escalation](#privilege-escalation)
 
 Basic Computer Exploitation
+- [Vulnversity](/tryhackme/ctfs/vulnversity.md)
+- [Basic Pentesting](/tryhackme/ctfs/basic_pentesting.md)
+- [Kenobi](/tryhackme/ctfs/kenobi.md)
 - [Steel Mountain](/tryhackme/ctfs/steel_mountain.md)
 
 ## Starting Out In CyberSec
@@ -690,11 +693,3 @@ You can use the credentials below to simulate an initial compromise over SMB (Se
   > c:\inetpub\wwwroot\realsecret.txt
 - What is the real secret?
   > The Flash is the fastest man alive
-
-
-
-
-
-
-
-
