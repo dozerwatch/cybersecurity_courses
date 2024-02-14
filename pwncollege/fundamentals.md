@@ -7,6 +7,7 @@
     - [File System](#file-system)
     - [Environment Variables](#environment-variables)
     - [Links](#links)
+    - [Problems](#problems)
 
 ## Binary Files
 - **ELF** files allow compilers to *create* and *define* a program
@@ -156,3 +157,49 @@
 - `ln` hard links are a type of file that references the data of another file
     - we can view any normal files as hard links
 - modifying one file (original or linking file) changes the other 
+
+## Problems
+
+### Level 53
+```markdown
+- the challenge checks for a specific parent process : ipython
+- the challenge checks for a specific process at the other end of stdin : rev
+- the challenge will check for a hardcoded password over stdin : kyneuvds
+```
+My solution is basically implementing `echo sdvuenyk | rev | /challenge` in ipython using the subprocess module. I do not understand why I have to exit the program with `ctrl+d` to get the flag.
+
+Solution: 
+```python3
+from subprocess import Pipe, Popen
+a = Popen("rev", stdin=PIPE, stdout=PIPE)
+Popen("echo sdvuenyk", stdout=a.stdin, shell=True)
+Popen("/challenge/embryoio_level53", stdin=a.stdout)
+```
+
+### Level 71
+```markdown
+- the challenge checks for a specific parent process : shellscript
+- the challenge will check that the environment is empty 
+- the challenge will check that argv[NUM] holds value VALUE (listed to the right as NUM:VALUE) : 272:znowkpvwjl
+- the challenge will check that env[KEY] holds value VALUE (listed to the right as KEY:VALUE) : 289:zceiexztx
+```
+
+The important take away here is that the syntax for the if condition is very particular. The spaces in `if [ <cond> ]` are very much **needed**. This is because `[` is actually a command. Also, after bash sees `if` and `then`, it is searching for `elif`, `else` not `elif[` or `else[`, so the space between the else/elif and the openning bracket is needed.
+
+```bash
+#!/bin/bash 
+
+var="a"
+
+for n in {1..300};
+do
+if [ $n -eq 271 ]
+then
+    var+=" znowkpvwjl";
+else
+    var+=" a";
+fi
+done
+
+env -i 289="zceiexztxc" /challenge/embryoio_level71 $var
+```
