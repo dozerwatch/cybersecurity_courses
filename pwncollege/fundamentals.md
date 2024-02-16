@@ -8,6 +8,11 @@
     - [Environment Variables](#environment-variables)
     - [Links](#links)
     - [Problems](#problems)
+        - [Level 53](#level-53)
+        - [Level 71](#level-71)
+        - [Level 73](#level-73)
+        - [Level 80](#level-80)
+
 
 ## Binary Files
 - **ELF** files allow compilers to *create* and *define* a program
@@ -188,9 +193,7 @@ The important take away here is that the syntax for the if condition is very par
 
 ```bash
 #!/bin/bash 
-
 var="a"
-
 for n in {1..300};
 do
 if [ $n -eq 271 ]
@@ -200,6 +203,75 @@ else
     var+=" a";
 fi
 done
-
 env -i 289="zceiexztxc" /challenge/embryoio_level71 $var
+```
+
+### Level 73
+```md
+- the challenge checks for a specific parent process : shellscript
+- the challenge will check that it is running in a specific current working directory : /tmp/yppaqz
+- the challenge will check to make sure that the parent's parent CWD to be different than the challenge's CWD
+```
+
+The parent working directory is `/home/hacker` as the bash script is executed in that directory. The script changes directory to the desired `tmp` directory and executes the challenge. So the challenge is launched in the `tmp` directory, meaning the current working directory will be the `tmp` directory. 
+
+The key part being `exec`, which replaces the shell process with the specified command.
+
+```bash
+#!/bin/bash 
+bash -c 'cd /tmp/yppaqz; exec /challenge/embryoio_level73'
+```
+
+### Level 80
+```md
+- the challenge checks for a specific parent process : binary
+- the challenge will check that argv[NUM] holds value VALUE (listed to the right as NUM:VALUE) : 26:wdelmirsow
+```
+
+I was really struggling with string concatenation in C, because I am horribly rusty in the language. Eventually, I got it. This challenge wasn't too hard. I was struggling because I am rusty in C.
+
+```C
+#include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <string.h>
+
+int pwncollege() {return 0;} 
+
+int main(int argc, char *argv[]) {
+    char *args[40];
+    for (int i=1; i<40; i++) {
+        args[i] = "hi";
+    }   
+    args[0] = "/challenge/embryoio_level80";
+    args[26] = "wdelmirsow";
+    args[39] = NULL;
+    if (fork() == 0) {
+        int status = execve(args[0], args, NULL);
+    } else {
+        waitpid(-1, 0, WCONTINUED);
+    }   
+    return 0;
+}
+```
+
+### Level 92
+```md
+- the challenge checks for a specific parent process : shellscript
+- the challenge will make sure that stdin is redirected from a fifo
+- the challenge will make sure that stdout is a redirected from fifo
+- the challenge will check for a hardcoded password over stdin : lurelhsk
+```
+
+This topic is new to me, so this level took me a long time. Lots of trials and researching. I think I understand it now.
+
+We redirect stdin and stdout of the challenge to two separate named pipes. We input the password into the input pipe and read the output of the challenge from the output pipe. 
+
+I was having trouble with this challenge because I was trying to use the same named pipe for both stdin and stdout redirection. I also don't really understand the necessity of backgrounding the tasks.
+
+```bash
+#!/bin/bash
+echo lurelhsk > input_pipe &
+/challenge/embryoio_level92 < input_pipe > output_pipe &
+cat output_pipe
 ```
