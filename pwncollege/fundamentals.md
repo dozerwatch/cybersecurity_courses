@@ -275,3 +275,42 @@ echo lurelhsk > input_pipe &
 /challenge/embryoio_level92 < input_pipe > output_pipe &
 cat output_pipe
 ```
+
+### Level 93
+```md
+- the challenge checks for a specific parent process : shellscript
+- the challenge will make sure that stdin is redirected from a fifo
+- the challenge will make sure that stdout is a redirected from fifo
+- the challenge will force the parent process to solve a number of arithmetic problems : 1
+- the challenge will use the following arithmetic operations in its arithmetic problems : +*
+- the complexity (in terms of nested expressions) of the arithmetic problems : 1
+```
+
+I don't fully understand how I got the answer for this problem. The part I am confused on is how the `output_pipe` wasn't closed after I read from it the first time. Maybe it is because I opened the challenge for both reading and writing?
+
+I used three terminals, which I will call 1, 2, and 3.
+```bash
+#!/bin/bash
+# script.sh
+/challenge/embryoio_level93 < input_pipe > output_pipe
+```
+```
+1. ./script
+2. cat output_pipe
+3. echo <number> > input_pipe
+```
+
+### Level 106
+```md
+- the challenge checks for a specific parent process : python
+- the challenge will make sure that stdin is redirected from a fifo
+- the challenge will make sure that stdout is a redirected from fifo
+- the challenge will force the parent process to solve a number of arithmetic problems : 1
+- the challenge will use the following arithmetic operations in its arithmetic problems : +*
+- the complexity (in terms of nested expressions) of the arithmetic problems : 1
+```
+
+My confusion:
+
+For the shellcode version of this level, the output of the /challenge is printed out BEFORE I input. For the python version (I am using subprocess), no output is printed out until AFTER I input. What is the difference between the two versions?
+
