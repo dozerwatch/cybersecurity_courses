@@ -283,7 +283,7 @@ import os
 stdin = os.open("input_pipe", os.O_RDWR)
 stdout = os.open("output_pipe", os.O_WRONLY)
 
-p = Popen("/challenge/embryoio_level106", stdin=stdin, stdout=stdout, )
+p = Popen("/challenge/embryoio_level106", stdin=stdin, stdout=stdout)
 
 p.wait()
 ```
@@ -292,7 +292,7 @@ p.wait()
 `dup2` and `close_fds` are the crucial tools to solving this level. Why `dup2`? 
 
 ```python
-from subprocess import PIPE, Popen, call
+from subprocess import Popen
 import os
 
 fd = os.open("test", os.O_RDONLY)
