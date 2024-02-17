@@ -166,15 +166,11 @@
 ## Problems
 
 ### Level 53
-```markdown
-- the challenge checks for a specific parent process : ipython
-- the challenge checks for a specific process at the other end of stdin : rev
-- the challenge will check for a hardcoded password over stdin : kyneuvds
-```
+
 My solution is basically implementing `echo sdvuenyk | rev | /challenge` in ipython using the subprocess module. I do not understand why I have to exit the program with `ctrl+d` to get the flag.
 
 Solution: 
-```python3
+```python
 from subprocess import Pipe, Popen
 a = Popen("rev", stdin=PIPE, stdout=PIPE)
 Popen("echo sdvuenyk", stdout=a.stdin, shell=True)
@@ -182,12 +178,6 @@ Popen("/challenge/embryoio_level53", stdin=a.stdout)
 ```
 
 ### Level 71
-```markdown
-- the challenge checks for a specific parent process : shellscript
-- the challenge will check that the environment is empty 
-- the challenge will check that argv[NUM] holds value VALUE (listed to the right as NUM:VALUE) : 272:znowkpvwjl
-- the challenge will check that env[KEY] holds value VALUE (listed to the right as KEY:VALUE) : 289:zceiexztx
-```
 
 The important take away here is that the syntax for the if condition is very particular. The spaces in `if [ <cond> ]` are very much **needed**. This is because `[` is actually a command. Also, after bash sees `if` and `then`, it is searching for `elif`, `else` not `elif[` or `else[`, so the space between the else/elif and the openning bracket is needed.
 
@@ -207,11 +197,6 @@ env -i 289="zceiexztxc" /challenge/embryoio_level71 $var
 ```
 
 ### Level 73
-```md
-- the challenge checks for a specific parent process : shellscript
-- the challenge will check that it is running in a specific current working directory : /tmp/yppaqz
-- the challenge will check to make sure that the parent's parent CWD to be different than the challenge's CWD
-```
 
 The parent working directory is `/home/hacker` as the bash script is executed in that directory. The script changes directory to the desired `tmp` directory and executes the challenge. So the challenge is launched in the `tmp` directory, meaning the current working directory will be the `tmp` directory. 
 
@@ -223,10 +208,6 @@ bash -c 'cd /tmp/yppaqz; exec /challenge/embryoio_level73'
 ```
 
 ### Level 80
-```md
-- the challenge checks for a specific parent process : binary
-- the challenge will check that argv[NUM] holds value VALUE (listed to the right as NUM:VALUE) : 26:wdelmirsow
-```
 
 I was really struggling with string concatenation in C, because I am horribly rusty in the language. Eventually, I got it. This challenge wasn't too hard. I was struggling because I am rusty in C.
 
@@ -256,12 +237,6 @@ int main(int argc, char *argv[]) {
 ```
 
 ### Level 92
-```md
-- the challenge checks for a specific parent process : shellscript
-- the challenge will make sure that stdin is redirected from a fifo
-- the challenge will make sure that stdout is a redirected from fifo
-- the challenge will check for a hardcoded password over stdin : lurelhsk
-```
 
 This topic is new to me, so this level took me a long time. Lots of trials and researching. I think I understand it now.
 
@@ -277,14 +252,6 @@ cat output_pipe
 ```
 
 ### Level 93
-```md
-- the challenge checks for a specific parent process : shellscript
-- the challenge will make sure that stdin is redirected from a fifo
-- the challenge will make sure that stdout is a redirected from fifo
-- the challenge will force the parent process to solve a number of arithmetic problems : 1
-- the challenge will use the following arithmetic operations in its arithmetic problems : +*
-- the complexity (in terms of nested expressions) of the arithmetic problems : 1
-```
 
 I don't fully understand how I got the answer for this problem. The part I am confused on is how the `output_pipe` wasn't closed after I read from it the first time. Maybe it is because I opened the challenge for both reading and writing?
 
@@ -301,16 +268,96 @@ I used three terminals, which I will call 1, 2, and 3.
 ```
 
 ### Level 106
-```md
-- the challenge checks for a specific parent process : python
-- the challenge will make sure that stdin is redirected from a fifo
-- the challenge will make sure that stdout is a redirected from fifo
-- the challenge will force the parent process to solve a number of arithmetic problems : 1
-- the challenge will use the following arithmetic operations in its arithmetic problems : +*
-- the complexity (in terms of nested expressions) of the arithmetic problems : 1
-```
+
 
 My confusion:
 
 For the shellcode version of this level, the output of the /challenge is printed out BEFORE I input. For the python version (I am using subprocess), no output is printed out until AFTER I input. What is the difference between the two versions?
 
+I had to open the `input_pipe` for read and write so it doesn't block. Then I could see the output, allowing me to input the right number.
+
+```python
+from subprocess import Popen
+import os
+
+stdin = os.open("input_pipe", os.O_RDWR)
+stdout = os.open("output_pipe", os.O_WRONLY)
+
+p = Popen("/challenge/embryoio_level106", stdin=stdin, stdout=stdout, )
+
+p.wait()
+```
+
+### Level 107
+`dup2` and `close_fds` are the crucial tools to solving this level. Why `dup2`? 
+
+```python
+from subprocess import PIPE, Popen, call
+import os
+
+fd = os.open("test", os.O_RDONLY)
+os.dup2(fd, 279)
+p = Popen("/challenge/embryoio_level107", stdin=fd, close_fds=False) 
+
+p.wait()
+```
+
+### Level 108
+```python
+from subprocess import Popen
+import os
+
+fd = os.open("test", os.O_RDWR)
+os.dup2(fd, 2)
+p = Popen("/challenge/embryoio_level108", stdin=fd, close_fds=False) 
+
+p.wait()
+```
+
+### Level 109
+```python
+from subprocess import Popen
+
+p = Popen("/challenge/embryoio_level109")
+
+p.wait()
+```
+
+For level 108 and 109, I only change the new fd in `dup2`. Level 108 works, but 109 fails. Why is this the case? Also using 0 or 2, works! Just using 1 fails. 
+
+Actually, all I needed to get the flag for level 109 is just to run the program and input the requested password. Maybe the program was coded wrong?
+
+### Level 119
+
+Just happy that I was able to get this one very quickly. Shows that I am understanding something!
+
+```C
+#include <stdio.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+
+int pwncollege() {return 0;} 
+
+int main(int argc, char *argv[]) {
+
+    char *args[] = {"/challenge/embryoio_level119", NULL};
+    int fin = open("input_pipe", O_RDWR);
+    int fout = open("output_pipe", O_WRONLY);
+
+    if (fork() == 0) {
+        dup2(fin,0);
+        dup2(fout,1);
+        int status = execve(args[0], args, NULL);
+    } else {
+        waitpid(-1, 0, WCONTINUED);
+    }   
+
+    return 0;
+}
+```
+
+### Level 125
