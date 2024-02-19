@@ -8,11 +8,6 @@
     - [Environment Variables](#environment-variables)
     - [Links](#links)
     - [Problems](#problems)
-        - [Level 53](#level-53)
-        - [Level 71](#level-71)
-        - [Level 73](#level-73)
-        - [Level 80](#level-80)
-
 
 ## Binary Files
 - **ELF** files allow compilers to *create* and *define* a program
@@ -386,3 +381,6 @@ ipipe.close()
 opipe.close()
 ```
 
+### Level 130
+
+The trick here is to open both named pipes for reading and writing.
