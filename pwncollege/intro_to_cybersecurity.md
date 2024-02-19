@@ -110,4 +110,15 @@
 
 ### Level 8
 
-The difference between `sendp` and `send` is that the former sends packets at layer 2 while the latter sends packets are layer 3. What I don't understand is how this difference (or possibly something else) prevents me from getting the flag if I use `send` instead of `sendp`.
+The difference between `sendp` and `send` is that the former sends packets at layer 2 while the latter sends packets are layer 3. What I don't understand is how this difference (or possibly something else) prevents me from getting the flag if I use `send` instead of `sendp`. 
+
+Note from future: It is because `send` does not recieve responses.
+
+### Level 13
+
+**ARP Poisoning** - a technique by which an attacker sends (spoofed) ARP messages onto a local area network. Generally, the aim is to associate the attacker's MAC address with the IP address of another host, such as the default gateway, causing any traffic meant for that IP address to be sent to the attacker instead.
+- This works because ARP is a stateless protocol. Network hosts will automatically cache any **ARP replies** they receive, regardless of whether network hosts requested them.
+
+### Level 14
+
+This challenge uses a man-in-the-middle attack known as **active eavesdropping**. We ARP poison both of the given IP's ARP cache and to intercept their communication. We see there is a "FLAG" command. Our goal is to inject this command into the communication stream to get our flag.
