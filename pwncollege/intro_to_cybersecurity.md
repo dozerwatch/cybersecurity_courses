@@ -108,24 +108,6 @@
 
 ## Problems
 
-### Level 5
-```
-tcpdump -A -i eth0
-```
-
-### Level 7
-```
-ifconfig eth0 10.0.0.2
-nc -l 31337
-```
-
 ### Level 8
-
-In this challenge you will manually send an Ethernet packet. The packet should have `Ether type=0xFFFF`. The packet should be sent to the remote host at `10.0.0.3`.
-
-``` 
-scapy
->>> sendp(Ether(src=get_if_hwaddr("eth0"), type=0xffff), iface="eth0")
-```
 
 The difference between `sendp` and `send` is that the former sends packets at layer 2 while the latter sends packets are layer 3. What I don't understand is how this difference (or possibly something else) prevents me from getting the flag if I use `send` instead of `sendp`.
