@@ -361,3 +361,28 @@ int main(int argc, char *argv[]) {
 ```
 
 ### Level 125
+
+This problem took me so freaking long! I was confused on the named pipes concept for so long. Turns out that I didn't submit my result! I need to add `\n` so that the result actually gets submitted. I still don't know why I need the `flush` function. I think it is because it forces the result to be submitted immediately.
+
+**script.sh**
+```bash
+/challenge/embryoio_level125 < input_pipe > output_pipe &
+python3 py.py
+```
+
+**py.py**
+```python
+ipipe = open("input_pipe", "w")
+opipe = open("output_pipe", "r")
+for line in opipe:
+    if "CHALLENGE" in line:
+        x = line.split(': ')[1].strip()
+        result = eval(x)
+        ipipe.write(str(result)+"\n")
+        ipipe.flush()
+    elif "pwn" in line:
+        print(line)
+ipipe.close()
+opipe.close()
+```
+
