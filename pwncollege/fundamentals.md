@@ -384,3 +384,7 @@ opipe.close()
 ### Level 130
 
 The trick here is to open both named pipes for reading and writing.
+
+### Level 140
+
+Use `exec 3<>/dev/tcp/$host/$port`. Then use `echo $answer >&3` to input answer.
