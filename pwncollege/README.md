@@ -4,6 +4,4 @@ A collection of notes and solutions to dojos in pwn.college. Since pwn.college h
 
 ## Topics 
 - [Fundamentals](/pwncollege/fundamentals.md)
-
-## Courses
-- [CSE 365 - Spring 2024](/pwncollege/cse365_s24.md)
+- [Intro to Cybersecurity](/pwncollege/intro_to_cybersecurity.md)
