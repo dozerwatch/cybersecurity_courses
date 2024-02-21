@@ -1,10 +1,52 @@
 # Introduction to Cybersecurity
+- [Building A Web Server](#building-a-web-server)
 - [Intercepting Communication](#intercepting-communication)
     - [CIDR](#cidr-notation-classless-inter-domain-routing)
+    - [Problems](#problems)
+- [Cryptography](#cryptography)
 
-![dynamic network](/pwncollege/images/dynamic_network.png)
+## Building A Web Server
+- CPUs contain registers, have a small amount of memory, and can perform a lot of operations.
+- We are **not** allowed to manipulate hardware directly, instead we have to talk with the **OS** using `syscalls`.
+- The **kernal memory** keeps track of the state of processes.
+    - located at the bottom of memory (high addresses)
+    - processes are just **data** in kernal memory
+    - `syscalls` manipulate kernal memory
+- `struct task_struct` is a blob is data managing the state of a process.
+- `struct task_struct *current` is a **global** variable that keeps track of the **current executing process**.
+- `socket` creates an endpoint for communication
+- `bind` assigns an address to a socket
+    - the address follows the structure
+        ```C
+        struct sockaddr_in {
+            uint16_t sa_family;
+            uint8_t sa_data[14];
+        };
+        ```
+    - `uint16_t` represents 2 bytes
+    - `uint8_t` represents 1 byte
+    - the address structure for **Internet** is
+        ```C
+        struct sockaddr_in {
+            uint16_t sin_family;
+            uint16_t sin_port;
+            uint32_t sin_addr;
+            uint8_t __pad[8];
+        };
+        ```
+        - `AF_INET` has value `2` and is a part of `sin_family`.
+        - `htons`, host to network, converts little-endian to big-endian.
+        - `0.0.0.0` binds to any network interface.
+- Networking likes to work in **big-endian**.
+- `listen` listens for incoming connection requests and puts them into a backlog queue.
+- `accept` extracts first connection request on queue and creates a new connected socket, returning a new FD for it.
+- `fork` creates a new child process by **duplicating** the calling parent process
+    - on success, `PID` of child is returned to the parent and `0` is returned to child
+    - both processes will run the same code
 
 ## Intercepting Communication
+![dynamic network](/pwncollege/images/dynamic_network.png)
+
 - There are three different ways to intercept communication:
     1. At the source
     2. Middle-man
@@ -122,3 +164,5 @@ Note from future: It is because `send` does not recieve responses.
 ### Level 14
 
 This challenge uses a man-in-the-middle attack known as **active eavesdropping**. We ARP poison both of the given IP's ARP cache and to intercept their communication. We see there is a "FLAG" command. Our goal is to inject this command into the communication stream to get our flag.
+
+## Cryptography
