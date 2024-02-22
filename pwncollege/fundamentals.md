@@ -164,6 +164,10 @@
 
 ## Problems
 
+I learned how to use pipes to interact with programs in python with the subprocess module. I learned how to use named pipes to interact with processes (shell to python, C to python) and about when they block and how to prevent it. I learned about how processes are started -- with fork and execve. I learned how to use dup2. 
+
+This was a very challenging module and therefore a very rewarding one. 
+
 ### Level 53
 
 My solution is basically implementing `echo sdvuenyk | rev | /challenge` in ipython using the subprocess module. I do not understand why I have to exit the program with `ctrl+d` to get the flag.
