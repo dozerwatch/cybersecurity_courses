@@ -1,13 +1,17 @@
 # Fundamentals
 
-- [Program Interaction](#binary-files)
-    - [Binary Files](#binary-files)
-    - [Command Line](#command-line)
-    - [Process](#process)
-    - [File System](#file-system)
-    - [Environment Variables](#environment-variables)
-    - [Links](#links)
-    - [Problems](#problems)
+**Program Misuse**
+
+**Program Interaction**
+- [Binary Files](#binary-files)
+- [Command Line](#command-line)
+- [Process](#process)
+- [File System](#file-system)
+- [Environment Variables](#environment-variables)
+- [Links](#links)
+- [Problems](#problems)
+
+**Assembly Crash Course**
 
 ## Binary Files
 - **ELF** files allow compilers to *create* and *define* a program
