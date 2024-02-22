@@ -392,3 +392,78 @@ Use `exec 3<>/dev/tcp/$host/$port`. Then use `echo $answer >&3` to input answer.
 ### Level 141
 
 I keep forgetting to add a **new line**, which is what submits the answer.
+
+```python
+import socket
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+
+    sock.connect(('localhost', 1504))
+
+    while True:
+        line = sock.recv(1024).decode()
+        if not line:
+            break
+        print(line)
+        if "CHALLENGE" in line:
+            x = line.split(': ')[1].strip()
+            r = eval(x)
+            ans = str(r) + "\n"
+            sock.sendall(ans.encode())
+```
+
+### Level 142
+I did not feel like figuring out how to do all the above in C, mainly string parsing, which is surprisingly nontrivial. So my strategy is to pipe the read socket data into a python program which will do the string parsing for me to find the arithmetic expression and solve it. Then I have the C program prompt me for the answer and send that answer into the socket. Since there is only 5 math expressions, this is feasible.
+
+```C
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <arpa/inet.h>
+#include <fcntl.h>
+
+int pwncollege() {return 0;} 
+
+int main(int argc, char *argv[]) {
+    int sockfd;
+    struct sockaddr_in serv_addr;
+    char buffer[1024];
+
+    // Create socket
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1) {
+        perror("Socket creation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Server address setup
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(1493);
+    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    // Connect to server
+    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
+        perror("Connection failed");
+        exit(EXIT_FAILURE);
+    }
+
+    int opipe = open("output_pipe", O_WRONLY);
+    char ans[100];
+    ssize_t bytes_received;
+
+    while ((bytes_received = recv(sockfd, buffer, sizeof(buffer), 0)) > 0) {
+
+        buffer[bytes_received] = '\0';
+        printf("Recieved from socket: %s", buffer);
+        write(opipe, buffer, bytes_received);
+
+        if (strstr(buffer, "CHALLENGE") != NULL) {
+            printf("Answer: ");
+            fgets(ans,100,stdin);
+            send(sockfd, ans, strlen(ans), 0); 
+        }
+    }
+    return 0;
+}
+```
