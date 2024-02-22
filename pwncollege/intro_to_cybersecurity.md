@@ -4,6 +4,11 @@
     - [CIDR](#cidr-notation-classless-inter-domain-routing)
     - [Problems](#problems)
 - [Cryptography](#cryptography)
+    - [One-time-pad](#one-time-pad)
+    - [Encryption Properties](#encyption-properties)
+    - [AES](#advanced-encryption-standard-aes)
+    - [Diffie-Hellman Key Exchange](#diffie-hellman-key-exchange)
+    
 
 ## Building A Web Server
 - CPUs contain registers, have a small amount of memory, and can perform a lot of operations.
@@ -166,3 +171,75 @@ Note from future: It is because `send` does not recieve responses.
 This challenge uses a man-in-the-middle attack known as **active eavesdropping**. We ARP poison both of the given IP's ARP cache and to intercept their communication. We see there is a "FLAG" command. Our goal is to inject this command into the communication stream to get our flag.
 
 ## Cryptography
+
+Alice <-------> Malory <-------> Bob
+
+- We might have to send data through some third party, either malicious or just the Internet
+    | CIA | Property 
+    | --- | -----------
+    | Confidentiality | Malory can't view the contents of the data. The data is secret.
+    | Integrity | Malory can't change the data. The data remained the same throughout the route.
+    | Authenticity | It is in fact Alice who sent the data to Bob. Malory did not send the data. The data is sent by the expected sender.
+- Cryptography guarantees the properties of CIA.
+
+### One-time-pad
+- Encrpytion:
+    1. Randomly generate a key
+        - equal probability each bit is 0 or 1
+    2. XOR each bit of plaintext with key
+        - equal probability each bit is flipped
+    - ciphertext will be complete gibberish
+    - length of key must be >= length of plaintext
+- Decryption:
+    - XOR each bit of ciphertext with key
+    - XOR is its own inverse
+    - (p + k) + k = p + (k + k) = p + 0 = p
+
+### Encyption Properties
+- Confusion
+    - Small change in key dramatically changes ciphertext
+- Diffusion
+    - Small change in plaintext dramatically changes ciphertext
+
+### Advanced Encryption Standard (AES)
+- satisfies confusion and diffusion
+- key sizes: 128 / 192 / 256 bits
+- block size: 128 bits, 16 bytes
+- encrypts exactly 128 bits of plaintext to exactly 128 bits of ciphertext
+
+**What happens if we only have 13 bytes of plaintext to encrypt?**
+- Pad with null bytes?
+    - No! Then we don't know what null bytes were intentional or padded
+    - Solution: PCK #7
+        - append number of bytes padded to the end
+        - if 3 bytes were added, append 030303 to end of plaintext
+
+**What happens if we have more than 16 bytes?**
+- Solution: Electronic Codebook (ECB)
+    - Pad out to a multiple of 16 bytes
+    - split plaintext into blocks of 16 bytes
+
+**!! PROBLEM with ECB !!**
+- If plaintext data has a lot of similar or repeating blocks, the ciphertext blocks will also be similar or repeating.
+- ECB Penguin
+- Solution: Cipher Block Chaining (CBC)
+    - XOR previous block's ciphertext with plaintext and encrypt this
+    - XOR first block of plaintext with an initialization vector
+    - This is very SLOW! Each block of plaintext relies on the previous block's ciphertext. Thus encryption is sequential, meaning slow!
+- Solution: Counter (CTR)
+    - Generate a random 16 byte value
+    - Add 1 to this value for next block and so on
+    - Encrypt this value
+    - XOR the encrypted value with plaintext
+    - This encryption and XOR can all be done in parallel, thus FAST!
+
+#### PROBLEM
+- How can I securely get the key from Alice to Bob?
+- If the key is just as long as the plaintext, why don't I just send the plaintext instead?
+
+### Diffie-Hellman Key Exchange
+1. Generate `p`, `g`, where `p` prime and `g` primitive root mod `p`
+2. Choose `a`, send `A = g^a % p`
+3. Choose `b`, send `B = g^b % p`
+4. `s = B^a % p` and `s = A^b % p`
+- This works because of the Discrete Log Problem. Finding `a` and `b` is extremely difficult, whereas calculating `s` is very easy.
