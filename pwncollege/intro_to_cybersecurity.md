@@ -354,4 +354,25 @@ If X and Y are equal, then we can trust the public key in the certificate. This 
 
 ## Problems
 
-**Level 3**
+**Level 1:** Base64 decode \
+**Level 2:** One-time-pad decode \
+**Level 4:** AES:ECB key given decode \
+**Level 6:** Diffie-Hellman key exchange \
+**Level 7:** RSA decode given $d$ \
+**Level 8:** RSA decode given $p, q$ \
+**Level 9:** SHA256 hash collision, first 2 bytes \
+**Level 10:** Proof of work, first 2 bytes are null bytes \
+**Level 11:** RSA decrypt the challenge \
+**Level 12:** Level 9 and 11 combined
+
+### Level 3
+This problem uses the crib drag attack. We are able to get two ciphertext encrypted with the same key and know $m_2$.
+$$ c_1 = m_1 \oplus k \\ c_2 = m_2 \oplus k \\ c_1 \oplus c_2 = (m_1 \oplus k) \oplus (m_2 \oplus k) \\ 
+c_1 \oplus c_2 = m_1 \oplus m_2 $$
+
+### Level 5
+This problem uses a chosen plaintext attack on AES in ECB mode. We are allowed to prepend data to the flag. From the source code:
+
+`ciphertext = cipher.encrypt(pad(plaintext    _prefix + flag, cipher.block_size))`
+
+I used [this](https://crypto.stackexchange.com/questions/42891/chosen-plaintext-attack-on-aes-in-ecb-mode) for help.
