@@ -1,6 +1,10 @@
 # Introduction to Cybersecurity
 - [Building A Web Server](#building-a-web-server)
 - [Intercepting Communication](#intercepting-communication)
+    - [Ethernet](#ethernet)
+    - [Internet](#internet)
+    - [Transmission Control Protocol](#transmission-control-protocol)
+    - [ARP](#address-resolution-protocol)
     - [CIDR](#cidr-notation-classless-inter-domain-routing)
     - [Problems](#problems)
 - [Cryptography](#cryptography)
@@ -8,6 +12,12 @@
     - [Encryption Properties](#encyption-properties)
     - [AES](#advanced-encryption-standard-aes)
     - [Diffie-Hellman Key Exchange](#diffie-hellman-key-exchange)
+    - [Asymmetric Encryption](#asymmetric-encryption)
+    - [RSA](#rivest-shamir-adleman-rsa)
+    - [RSA Key Generation](#rsa-key-generation)
+    - [Hashing](#hashing)
+    - [Trust](#trust)
+    - [Problems](#problems-1)
     
 
 ## Building A Web Server
@@ -57,83 +67,77 @@
     2. Middle-man
     3. At the destination
 
-- **Ethernet** 
-    - physically connected
-    - **(Host A --> Host B)**: A: eth0 --> vethA --> bridge0 --> vethB --> B: eth0
-    - Ethernet Packet Structure:
-        ```
-        6 bytes - Destinaction MAC addres
-        6 bytes - Source MAC address
-        2 bytes - Type
-        ```
-- **Internet**
-    - routing, hosts are not physically linked
-    - Type: `0x08` `0x00` - Internet protocol
-    - The Internet packet structure is more complex
-        ```
-        4 bits  - Version
-        4 bits  - Internet Header Length
-        1 byte  - Differentiated Services Field
-        2 bytes - Total Length
-        2 bytes - Identification
-        3 bits  - Flags
-        13 bits - Fragment Offset
-        1 byte  - Time To Live
-        1 byte  - Protocol
-        2 bytes - Header Checksum
-        4 bytes - Source IP Address
-        4 bytes - Destination IP Address
-        ? bytes - Options
-        ```
-- **Transmission Control Protocol**
-    - Protocol: `0x06` - TCP
-    - Enables a stateful interaction
-    - Introduces order, reliability, and ports
-    - Packet structure
-        ```
-        2 bytes - Source port
-        2 bytes - Destination port
-        4 bytes - Sequence number: Start with randomly initalized value, maps amount of data sent
-        4 bytes - Acknowledgement number: Start with randomly initialized value, maps amount of data recieved
-        1 octet - Data Offset: Determines number of bytes used for header and the rest is data
-        3 bits  - Reserved
-        9 bits - Flags
-        2 bytes - Window Size: Data max size
-        2 bytes - Checksum: of the header
-        2 bytes - Urgent Pointer: Indicate how part of data is urgent
-        ? bytes - Options
-        ```
-    - Sequence and Acknowledgement number relates to state
-    - Flags:
-        - URG: indicate Urgent Pointer field is significant
-        - ACK: acknowledge other's seq number
-        - PSH: push forward the data immediately
-        - RST: reset the connection
-        - SYN: synchronize sequence numbers, only sent in first packet for both ends
-        - FIN: last packet from sender
-- **Address Resolution Protocol**
-    - Type: `0x08` `0x06` - ARP 
-    - Packet Structure
-        ```
-        2 bytes - Hardware Type
-        2 bytes - Protocol Type
-        1 byte  - Hardware Address Length
-        1 byte  - Protocol Address Length
-        2 bytes - Operation
-        6 bytes - Sender Hardware Address
-        4 bytes - Sender Protocol Address
-        6 bytes - Target Hardware Address
-        4 bytes - Target Protocol Address
-        ```
-        - Convert from Protocol Type to Hardware Type
-        - Operation: `who-has: 00 01` `is-at: 00 02`
+### Ethernet
+- physically connected
+- **(Host A --> Host B)**: A: eth0 --> vethA --> bridge0 --> vethB --> B: eth0
+- Ethernet Packet Structure:
+    ```
+    6 bytes - Destinaction MAC addres
+    6 bytes - Source MAC address
+    2 bytes - Type
+    ```
+### Internet
+- routing, hosts are not physically linked
+- Type: `0x08` `0x00` - Internet protocol
+- The Internet packet structure is more complex
+    ```
+    4 bits  - Version
+    4 bits  - Internet Header Length
+    1 byte  - Differentiated Services Field
+    2 bytes - Total Length
+    2 bytes - Identification
+    3 bits  - Flags
+    13 bits - Fragment Offset
+    1 byte  - Time To Live
+    1 byte  - Protocol
+    2 bytes - Header Checksum
+    4 bytes - Source IP Address
+    4 bytes - Destination IP Address
+    ? bytes - Options
+    ```
+### Transmission Control Protocol
+- Protocol: `0x06` - TCP
+- Enables a stateful interaction
+- Introduces order, reliability, and ports
+- Packet structure
+    ```
+    2 bytes - Source port
+    2 bytes - Destination port
+    4 bytes - Sequence number: Start with randomly initalized value, maps amount of data sent
+    4 bytes - Acknowledgement number: Start with randomly initialized value, maps amount of data recieved
+    1 octet - Data Offset: Determines number of bytes used for header and the rest is data
+    3 bits  - Reserved
+    9 bits - Flags
+    2 bytes - Window Size: Data max size
+    2 bytes - Checksum: of the header
+    2 bytes - Urgent Pointer: Indicate how part of data is urgent
+    ? bytes - Options
+    ```
+- Sequence and Acknowledgement number relates to state
+- Flags:
+    - URG: indicate Urgent Pointer field is significant
+    - ACK: acknowledge other's seq number
+    - PSH: push forward the data immediately
+    - RST: reset the connection
+    - SYN: synchronize sequence numbers, only sent in first packet for both ends
+    - FIN: last packet from sender
 
-### tcpdump
-```
--A: Print each packet in ASCII
--i: listen on interface, `any` captures from all interfaces
--
-``````
+### Address Resolution Protocol
+- Type: `0x08` `0x06` - ARP 
+- Packet Structure
+    ```
+    2 bytes - Hardware Type
+    2 bytes - Protocol Type
+    1 byte  - Hardware Address Length
+    1 byte  - Protocol Address Length
+    2 bytes - Operation
+    6 bytes - Sender Hardware Address
+    4 bytes - Sender Protocol Address
+    6 bytes - Target Hardware Address
+    4 bytes - Target Protocol Address
+    ```
+    - Convert from Protocol Type to Hardware Type
+    - Operation: `who-has: 00 01` `is-at: 00 02`
 
 ### CIDR Notation (Classless Inter-Domain Routing)
 - An IP address allocation method that improves data routing efficiency on the Internet.
@@ -172,14 +176,14 @@ This challenge uses a man-in-the-middle attack known as **active eavesdropping**
 
 ## Cryptography
 
-Alice <-------> Malory <-------> Bob
+Alice <-------> Mallory <-------> Bob
 
 - We might have to send data through some third party, either malicious or just the Internet
     | CIA | Property 
     | --- | -----------
-    | Confidentiality | Malory can't view the contents of the data. The data is secret.
-    | Integrity | Malory can't change the data. The data remained the same throughout the route.
-    | Authenticity | It is in fact Alice who sent the data to Bob. Malory did not send the data. The data is sent by the expected sender.
+    | Confidentiality | Mallory can't view the contents of the data. The data is secret.
+    | Integrity | Mallory can't change the data. The data remained the same throughout the route.
+    | Authenticity | It is in fact Alice who sent the data to Bob. Mallory did not send the data. The data is sent by the expected sender.
 - Cryptography guarantees the properties of CIA.
 
 ### One-time-pad
@@ -243,3 +247,111 @@ Alice <-------> Malory <-------> Bob
 3. Choose `b`, send `B = g^b % p`
 4. `s = B^a % p` and `s = A^b % p`
 - This works because of the Discrete Log Problem. Finding `a` and `b` is extremely difficult, whereas calculating `s` is very easy.
+
+### Asymmetric Encryption
+- Symmetric - key for both encryption and decryption
+- Asymmetric - public key for encryption, private key for decryption
+- **Fermat's Little Theorem**
+    $
+    \begin{align}
+    &a^p \equiv a \ (mod \ p), \ \textrm{where p prime} \\
+    \iff &a^{p-1} \equiv a \ (mod \ p)
+    \end{align}
+    $
+- **Euler's Theorem**
+    $\begin{align}
+        &a^{(p-1)(q-1)} \equiv 1 \ (mod \ p) \\
+        \iff &a^{(p-1)(q-1)} \equiv a \ (mod \ p) \\
+        \implies &a^r \equiv a \ (mod \ pq), \ \textrm{where} \\
+        &r \equiv 1 \ (mod \ (p-1)(q-1))
+    \end{align}$
+
+### Rivest-Shamir-Adleman (RSA)
+$$ (m^e)^d \equiv m \ (mod \ n)$$
+where $n = pq, \ p,q \ \textrm{prime, and } ed \equiv 1 \ (mod \ (p-1)(q-1))$.
+- This uses Euler's Theorem.
+- $<e, n>$ is the public key.
+- $<d, n>$ is the private key.
+- $m$ is plaintext.
+- $m^e$ is ciphertext.
+- This works because prime factorization is very difficult, especially for large numbers.
+
+### RSA Key Generation
+1. Choose $p,q$
+2. $n=pq$
+3. $\phi(n) = (p-1)(q-1)$
+4. Choose $e$ such that $gcd(e, \phi(n)) = 1$. Common for $e=65537$.
+5. $d \equiv e^{-1} \ (mod \ \phi(n))$
+
+- RSA Encryption: $c \equiv m^e \ (mod \ n)$
+- RSA Decryption: $m \equiv c^d \ (mod \ n)$
+- RSA Signing: $s \equiv m^d \ (mod \ n)$
+- RSA Verification: $m \equiv s^e \ (mod \ n)$
+
+### Hashing
+- message ---> hash function ---> hash value
+- Hashing is one way.
+- Hashing Resistance Properties
+    1. Pre-image resistance
+        - Given hash value $h$, it should be difficult to find message $m$ such that $h$ = hash($m$).
+        - Given my hash value, no one should be able to find a hash collision easily.
+    2. Second pre-image resistance
+        - Given message $m_1$, it should be difficult to find different message $m_2$ such that hash($m_1$) = hash($m_2$).
+        - Given my message, no one should be able to find a hash collision easily. 
+    3. Collision resistance
+        - It should be difficult to find messages $m_1, m_2$ such that hash($m_1$) = hash($m_2$). 
+        - Given any messages, no one should be able to find a hash collision easily.
+- Applications of hashing:
+    - SHA256
+    - Password hashing with salt
+    - Proof of work
+        - There is a challenge and response hashed together such that the hash value starts with a given prefix
+        - Used in bitcoin mining
+
+### Trust
+- **Diffie-Hellman Key Exchange Problem**
+    - What if Mallory is an active participant, instead of a passive listener?
+    - Then Mallory can perform the key exchange HERSELF and she will know the keys for both Alice and Bob.
+    - Now Mallory can intercept their messages and decrypt it with the respective key, read it, encrypt it with the respective key, and send it to the recipient.
+    - So there is no secure communication at all. THIS IS BAD!
+- The same problem occurs with RSA
+    - Mallory can switch out the public keys.
+
+How can we trust that the keys given were actually by who we intended.
+
+**Solution: Trust**
+- We need a Root of Trust
+- The Root of Trust is the OS
+    - The OS figures out who else we can trust
+        - These trustees figure out who else we can trust
+- There is a network of trust starting from the Root of Trust
+
+What is the process of learning who we can trust?
+
+**Hashing Certificate Data**
+
+```md
+Certificate
+{
+    "name": str,
+    "key": {
+        "e": int,
+        "n": int,
+    },
+    "signer": root
+}
+```
+- Certificate ---> Hash Function ---> Hash Value
+
+**Hashing Certificate Data**
+- Hash Value ---> Sign (RSA Decrypt) ---> Signature
+
+**Certificate Verification**
+- Certificate ---> Hash ---> X
+- Signature ---> RSA (Encrypt) ---> Y
+
+If X and Y are equal, then we can trust the public key in the certificate. This is because the Root of Trust says this is the actual public key and I trust the Root of Trust.
+
+## Problems
+
+**Level 3**
