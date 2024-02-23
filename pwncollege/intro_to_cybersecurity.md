@@ -357,6 +357,7 @@ If X and Y are equal, then we can trust the public key in the certificate. This 
 
 ### Level 3
 This problem uses the crib drag attack. We are able to get two ciphertext encrypted with the same key and know $m_2$.
+
 ![RSA](/pwncollege/images/rsa.png)
 
 ### Level 5
