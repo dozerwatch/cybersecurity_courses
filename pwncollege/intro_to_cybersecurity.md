@@ -197,7 +197,7 @@ Alice <-------> Mallory <-------> Bob
 - Decryption:
     - XOR each bit of ciphertext with key
     - XOR is its own inverse
-    - (p + k) + k = p + (k + k) = p + 0 = p
+    - $(p \oplus k) \oplus k = p \oplus (k \oplus k) = p \oplus 0 = p$
 
 ### Encyption Properties
 - Confusion
@@ -252,12 +252,10 @@ Alice <-------> Mallory <-------> Bob
 - Symmetric - key for both encryption and decryption
 - Asymmetric - public key for encryption, private key for decryption
 - **Fermat's Little Theorem**
-    $
-    \begin{align}
+    $\begin{align}
     &a^p \equiv a \ (mod \ p), \ \textrm{where p prime} \\
     \iff &a^{p-1} \equiv a \ (mod \ p)
-    \end{align}
-    $
+    \end{align}$
 - **Euler's Theorem**
     $\begin{align}
         &a^{(p-1)(q-1)} \equiv 1 \ (mod \ p) \\
