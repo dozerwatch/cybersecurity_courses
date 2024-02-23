@@ -252,26 +252,16 @@ Alice <-------> Mallory <-------> Bob
 - Symmetric - key for both encryption and decryption
 - Asymmetric - public key for encryption, private key for decryption
 - **Fermat's Little Theorem**
-    ```math
-    \begin{align}
-    &a^p \equiv a \ (mod \ p), \ \textrm{where p prime} \\
-    \iff &a^{p-1} \equiv a \ (mod \ p)
-    \end{align}
-    ```
+    ![Fermat's Little Theorem](/pwncollege/images/fermat_little_theorem.png)
 - **Euler's Theorem**
-    $\begin{align}
-        &a^{(p-1)(q-1)} \equiv 1 \ (mod \ p) \\
-        \iff &a^{(p-1)(q-1)} \equiv a \ (mod \ p) \\
-        \implies &a^r \equiv a \ (mod \ pq), \ \textrm{where} \\
-        &r \equiv 1 \ (mod \ (p-1)(q-1))
-    \end{align}$
+    ![Euler's Theorem](/pwncollege/images/eulers_theorem.png)
 
 ### Rivest-Shamir-Adleman (RSA)
-$$ (m^e)^d \equiv m \ (mod \ n)$$
-where $n = pq, \ p,q \ \textrm{prime, and } ed \equiv 1 \ (mod \ (p-1)(q-1))$.
+![RSA](/pwncollege/images/rsa.png)
+
 - This uses Euler's Theorem.
-- $<e, n>$ is the public key.
-- $<d, n>$ is the private key.
+- <$e, n$> is the public key.
+- <$d, n$> is the private key.
 - $m$ is plaintext.
 - $m^e$ is ciphertext.
 - This works because prime factorization is very difficult, especially for large numbers.
@@ -367,8 +357,7 @@ If X and Y are equal, then we can trust the public key in the certificate. This 
 
 ### Level 3
 This problem uses the crib drag attack. We are able to get two ciphertext encrypted with the same key and know $m_2$.
-$$ c_1 = m_1 \oplus k \\ c_2 = m_2 \oplus k \\ c_1 \oplus c_2 = (m_1 \oplus k) \oplus (m_2 \oplus k) \\ 
-c_1 \oplus c_2 = m_1 \oplus m_2 $$
+![Level 3](/pwncollege/images/level3.png)
 
 ### Level 5
 This problem uses a chosen plaintext attack on AES in ECB mode. We are allowed to prepend data to the flag. From the source code:
