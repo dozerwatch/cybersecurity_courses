@@ -252,10 +252,12 @@ Alice <-------> Mallory <-------> Bob
 - Symmetric - key for both encryption and decryption
 - Asymmetric - public key for encryption, private key for decryption
 - **Fermat's Little Theorem**
-    $\begin{align}
+    ```math
+    \begin{align}
     &a^p \equiv a \ (mod \ p), \ \textrm{where p prime} \\
     \iff &a^{p-1} \equiv a \ (mod \ p)
-    \end{align}$
+    \end{align}
+    ```
 - **Euler's Theorem**
     $\begin{align}
         &a^{(p-1)(q-1)} \equiv 1 \ (mod \ p) \\
