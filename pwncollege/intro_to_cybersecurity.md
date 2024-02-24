@@ -366,3 +366,16 @@ This problem uses a chosen plaintext attack on AES in ECB mode. We are allowed t
 `ciphertext = cipher.encrypt(pad(plaintext    _prefix + flag, cipher.block_size))`
 
 I used [this](https://crypto.stackexchange.com/questions/42891/chosen-plaintext-attack-on-aes-in-ecb-mode) for help.
+
+### Level 13
+This problem requires us to make a user certificate that is signed by root. We send this certificate -- the certificate itself and its signature. We get the flag encrypted with our own RSA public key.
+
+### Level 14
+Perform a Diffie-Hellman key exchange. Use this key to get an AES CBC cipher. Sign a certificate with root private key. Sign a given certificate with user private key. Use AES CBC cipher to decrypt flag.
+
+I had so much trouble with this level because I initialized both ciphers (below) at once. It made the decryption of my inputs wrong.
+```python
+cipher_encrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
+
+cipher_decrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
+```
