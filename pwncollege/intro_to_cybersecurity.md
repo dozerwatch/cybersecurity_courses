@@ -421,6 +421,8 @@ One application of web security is the prevention of random people from robbing 
     ```SQL
     ' or 1=1 --
     ```
+    - A solution to this is to use `?`, which parses first, then fills in the data.
+- Stack Overflow return address
 
 ### Same-Origin Policy
 
