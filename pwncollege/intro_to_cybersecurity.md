@@ -18,6 +18,7 @@
     - [Hashing](#hashing)
     - [Trust](#trust)
     - [Problems](#problems-1)
+- [Web Security](#web-security)
     
 
 ## Building A Web Server
@@ -379,3 +380,5 @@ cipher_encrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
 
 cipher_decrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
 ```
+
+## Web Security
