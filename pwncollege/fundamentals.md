@@ -480,3 +480,56 @@ int main(int argc, char *argv[]) {
 ```
 
 ## Assembly Crash Course
+
+### Computer Architecture
+- Every program will become binary instructions executed on the CPU.
+    - At the center of the CPU is a lot of logic gates.
+    - It is all about logic gates.
+![computer architecture](/pwncollege/images/computer_architecture.png)
+- Accessing Network + Others is slow, accessing the disk is slightly faster, accessing memory is faster, accessing the register is much faster.
+    - The faster the access, the smaller the space
+- Memory goes to cache, then to registers
+- This is called the **Jon Von Neumann architecture**.
+
+### Assembly
+- A direct text representation of binary code. 
+- Binary code and assembly code are equivalent:
+    - One assembly instruction is one CPU instruction.
+- CPUs interact with 3 types of data:
+    1. Data directly given to CPU
+    2. Data in registers
+    3. Data in memory
+
+### Data
+| Name | Size
+| ---- | ----
+| Nibble | 4 bits
+| BYTE | 8 bits
+| WORD | 2 bytes
+| DWORD | 4 bytes
+| QWORD | 8 bytes
+
+Numbers are represented using **two's complement**:
+- Negative numbers are represented as the large positive number they would correlate to.
+- Leftmost bit represent negative number.
+
+### Registers
+- CPUs need fast access to the data it is working on.
+- Registers are very fast, temporary storage for data.
+- `movsx` - sign-extending move
+
+### Memory
+- Used to store lots of data with fairly fast access.
+- Processes use memory for everything.
+- Addresses range from 0x10000 to 0x7fffffffffff (11 f's).
+- Each memory address is one byte
+    - This means there are 127 terabytes of addressable RAM.
+- A process has virtual memeory which is partially filled by OS.
+- The **stack** starts in high memory and grows towards smaller addresses.
+    - `rsp` points to the top of the stack (most recently added)
+    - `push rcx` = `sub rsp, 8` `mov [rsp], rcx`
+    - An 8 byte write at address 0x1000 will write from 0x1000 to 0x1007.
+- Address calculations: `reg + reg * c_1 + c_2`
+- Write immediate values: `mov DWORD PTR [rax], 0x1337`
+
+## Control Flow
