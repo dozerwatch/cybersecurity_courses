@@ -19,6 +19,8 @@
     - [Trust](#trust)
     - [Problems](#problems-1)
 - [Web Security](#web-security)
+    - [Injection](#injection)
+    - [Same-Origin Policy](#same-origin-policy)
     
 
 ## Building A Web Server
@@ -382,3 +384,20 @@ cipher_decrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
 ```
 
 ## Web Security
+One application of web security is the prevention of random people from robbing your bank acount online.
+
+- Web **Client** Security Considerations
+    - Recieve arbitrary data from some remote server
+    - Some things this data might influence client to do:
+        1. Make additional HTTP requests to other servers
+        2. Run arbitrary Javascript
+- Web **Server** Security Considerations
+    - Recieve arbitrary data from some remote client
+    - Some things this data might influence server to do:
+        1. Access or modify database
+        2. Interact with server system
+        3. Influence other web clients
+
+### Injection
+
+### Same-Origin Policy
