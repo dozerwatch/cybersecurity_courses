@@ -12,6 +12,13 @@
     - [Problems](#problems)
 
 - [Assembly Crash Course](#assembly-crash-course)
+    - [Computer Architecture](#computer-architecture)
+    - [Assembly](#assembly)
+    - [Data](#data)
+    - [Registers](#registers)
+    - [Memory](#memory)
+    - [Control Flow](#control-flow)
+
 
 ## Program Misuse
 
