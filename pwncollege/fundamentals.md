@@ -1,19 +1,22 @@
 # Fundamentals
 
-**Program Misuse**
+- [Program Misuse](#program-misuse)
 
-**Program Interaction**
-- [Binary Files](#binary-files)
-- [Command Line](#command-line)
-- [Process](#process)
-- [File System](#file-system)
-- [Environment Variables](#environment-variables)
-- [Links](#links)
-- [Problems](#problems)
+- [Program Interaction](#program-interaction)
+    - [Binary Files](#binary-files)
+    - [Command Line](#command-line)
+    - [Process](#process)
+    - [File System](#file-system)
+    - [Environment Variables](#environment-variables)
+    - [Links](#links)
+    - [Problems](#problems)
 
-**Assembly Crash Course**
+- [Assembly Crash Course](#assembly-crash-course)
 
-## Binary Files
+## Program Misuse
+
+## Program Interaction
+###  Binary Files
 - **ELF** files allow compilers to *create* and *define* a program
 - All ELFs start with `7f 45 4C 46`
 - **ELF program headers**
@@ -47,14 +50,14 @@
     | `objcopy`     | swap out ELF sections |
     | `strip`       | remove helpful information (like symbols) |
 
-## Command Line
+### Command Line
 - Linux facilitates the safe interaction of processes with each other and with the file system, the network, and computer.
 - The command line (AKA shell) is an interface to the computer.
 - **Interface** 
     - a device or program enabling a user to communicate with a computer. 
     - a device or program for connecting two items of hardware of software so that they can be operated together or communicate with each other.
 
-## Process
+### Process
 - A **process** is a *running program*
     - a **program** is a *file* on your computer
         - **files** live in a *file system*
@@ -149,20 +152,20 @@
 | `/proc`       | runtime process data
 | `/tmp`        | temporary data storage
 
-## Environment Variables
+### Environment Variables
 - a set of key:value pairs passed into every process when it is launched
     - processes will pass them onto their child processes
 - If the first word of the command has no `/` characters, the shell will search for the word in either its builtins or a set of directories specified in the `PATH` environment variable.
 - `which <command>` searches through directories in `PATH` and returns the path to the `<command>` file
 
-## Links
+### Links
 - `ln -s` symbolic links are a type of file that references a path to another file
     - symbolic links to a relative path are relative to the directory containing the symbolic link
 - `ln` hard links are a type of file that references the data of another file
     - we can view any normal files as hard links
 - modifying one file (original or linking file) changes the other 
 
-## Problems
+### Problems
 
 I learned how to use pipes to interact with programs in python with the subprocess module. I learned how to use named pipes to interact with processes (shell to python, C to python) and about when they block and how to prevent it. I learned about how processes are started -- with fork and execve. I learned how to use dup2. 
 
@@ -475,3 +478,5 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ```
+
+## Assembly Crash Course
