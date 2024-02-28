@@ -532,4 +532,15 @@ Numbers are represented using **two's complement**:
 - Address calculations: `reg + reg * c_1 + c_2`
 - Write immediate values: `mov DWORD PTR [rax], 0x1337`
 
-## Control Flow
+### Control Flow
+- `jmp` adds to RIP
+- `eb fe` represents jump back by 2 bytes
+    - `fe` is -2 in two's complement
+    - this is an infinite loop
+- Condition jumps check conditions stored in `rflags` register
+- Flags are updated by:
+    1. Most arithmetic operations
+    2. `cmp` (`sub` but discards result)
+    3. `test` (`and` but discards result)
+- `call` pushes RIP and jumps to instruction
+- `ret` pops RIP and jumps to it
