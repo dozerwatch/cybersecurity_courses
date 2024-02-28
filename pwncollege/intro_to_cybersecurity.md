@@ -399,5 +399,33 @@ One application of web security is the prevention of random people from robbing 
         3. Influence other web clients
 
 ### Injection
+- Command
+    ```bash
+    system("TZ=`whoami` date")
+    execve("/bin/sh", ["sh", "-c", "TZ=`whoami` date"], {...})
+    execve("/usr/bin/whoami", ["whoami"], {...})
+    execve("/usr/bin/date", ["date"], {"TZ": "root"})
+    ```
+    ```bash
+    system("TZ=; whoami # date")
+    execve("/bin/sh", ["sh", "-c", "TZ=; whoami # date"], {...})
+    execve("/usr/bin/whoami", ["whoami"], {...})
+    ```
+- HTML
+    ```HTML
+    html("<p>Hello, <script>alert(1)</script>!</p>")
+    ```
+    - A user sending data to a web server, for the response to only come back to the user is a futile attack. The user is only "attacking" the user.
+    - When this injection becomes dangerous is when we are able to affect other users with our data, meaning we are able to run arbitrary Javascript on their system.
+- SQL
+    ```SQL
+    ' or 1=1 --
+    ```
 
 ### Same-Origin Policy
+
+
+## Problems
+
+### Level 7
+Very interesting problem. My only trouble was not knowing how to write the script. Turns out I had to use the `requests` module, mainly `requests.Session()`. Next is just trying out all possible characteres with the `post` function and adding the correct characters to the flag.

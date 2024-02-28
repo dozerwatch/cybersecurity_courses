@@ -1,7 +1,5 @@
 # Fundamentals
 
-- [Program Misuse](#program-misuse)
-
 - [Program Interaction](#program-interaction)
     - [Binary Files](#binary-files)
     - [Command Line](#command-line)
@@ -18,9 +16,6 @@
     - [Registers](#registers)
     - [Memory](#memory)
     - [Control Flow](#control-flow)
-
-
-## Program Misuse
 
 ## Program Interaction
 ###  Binary Files
