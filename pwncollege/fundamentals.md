@@ -177,32 +177,9 @@ This was a very challenging module and therefore a very rewarding one.
 
 My solution is basically implementing `echo sdvuenyk | rev | /challenge` in ipython using the subprocess module. I do not understand why I have to exit the program with `ctrl+d` to get the flag.
 
-Solution: 
-```python
-from subprocess import Pipe, Popen
-a = Popen("rev", stdin=PIPE, stdout=PIPE)
-Popen("echo sdvuenyk", stdout=a.stdin, shell=True)
-Popen("/challenge/embryoio_level53", stdin=a.stdout)
-```
-
 ### Level 71
 
 The important take away here is that the syntax for the if condition is very particular. The spaces in `if [ <cond> ]` are very much **needed**. This is because `[` is actually a command. Also, after bash sees `if` and `then`, it is searching for `elif`, `else` not `elif[` or `else[`, so the space between the else/elif and the openning bracket is needed.
-
-```bash
-#!/bin/bash 
-var="a"
-for n in {1..300};
-do
-if [ $n -eq 271 ]
-then
-    var+=" znowkpvwjl";
-else
-    var+=" a";
-fi
-done
-env -i 289="zceiexztxc" /challenge/embryoio_level71 $var
-```
 
 ### Level 73
 
@@ -210,39 +187,9 @@ The parent working directory is `/home/hacker` as the bash script is executed in
 
 The key part being `exec`, which replaces the shell process with the specified command.
 
-```bash
-#!/bin/bash 
-bash -c 'cd /tmp/yppaqz; exec /challenge/embryoio_level73'
-```
-
 ### Level 80
 
 I was really struggling with string concatenation in C, because I am horribly rusty in the language. Eventually, I got it. This challenge wasn't too hard. I was struggling because I am rusty in C.
-
-```C
-#include <stdio.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <string.h>
-
-int pwncollege() {return 0;} 
-
-int main(int argc, char *argv[]) {
-    char *args[40];
-    for (int i=1; i<40; i++) {
-        args[i] = "hi";
-    }   
-    args[0] = "/challenge/embryoio_level80";
-    args[26] = "wdelmirsow";
-    args[39] = NULL;
-    if (fork() == 0) {
-        int status = execve(args[0], args, NULL);
-    } else {
-        waitpid(-1, 0, WCONTINUED);
-    }   
-    return 0;
-}
-```
 
 ### Level 92
 
@@ -252,31 +199,11 @@ We redirect stdin and stdout of the challenge to two separate named pipes. We in
 
 I was having trouble with this challenge because I was trying to use the same named pipe for both stdin and stdout redirection. I also don't really understand the necessity of backgrounding the tasks.
 
-```bash
-#!/bin/bash
-echo lurelhsk > input_pipe &
-/challenge/embryoio_level92 < input_pipe > output_pipe &
-cat output_pipe
-```
-
 ### Level 93
 
 I don't fully understand how I got the answer for this problem. The part I am confused on is how the `output_pipe` wasn't closed after I read from it the first time. Maybe it is because I opened the challenge for both reading and writing?
 
-I used three terminals, which I will call 1, 2, and 3.
-```bash
-#!/bin/bash
-# script.sh
-/challenge/embryoio_level93 < input_pipe > output_pipe
-```
-```
-1. ./script
-2. cat output_pipe
-3. echo <number> > input_pipe
-```
-
 ### Level 106
-
 
 My confusion:
 
@@ -284,52 +211,8 @@ For the shellcode version of this level, the output of the /challenge is printed
 
 I had to open the `input_pipe` for read and write so it doesn't block. Then I could see the output, allowing me to input the right number.
 
-```python
-from subprocess import Popen
-import os
-
-stdin = os.open("input_pipe", os.O_RDWR)
-stdout = os.open("output_pipe", os.O_WRONLY)
-
-p = Popen("/challenge/embryoio_level106", stdin=stdin, stdout=stdout)
-
-p.wait()
-```
-
 ### Level 107
 `dup2` and `close_fds` are the crucial tools to solving this level. Why `dup2`? 
-
-```python
-from subprocess import Popen
-import os
-
-fd = os.open("test", os.O_RDONLY)
-os.dup2(fd, 279)
-p = Popen("/challenge/embryoio_level107", stdin=fd, close_fds=False) 
-
-p.wait()
-```
-
-### Level 108
-```python
-from subprocess import Popen
-import os
-
-fd = os.open("test", os.O_RDWR)
-os.dup2(fd, 2)
-p = Popen("/challenge/embryoio_level108", stdin=fd, close_fds=False) 
-
-p.wait()
-```
-
-### Level 109
-```python
-from subprocess import Popen
-
-p = Popen("/challenge/embryoio_level109")
-
-p.wait()
-```
 
 For level 108 and 109, I only change the new fd in `dup2`. Level 108 works, but 109 fails. Why is this the case? Also using 0 or 2, works! Just using 1 fails. 
 
@@ -339,60 +222,9 @@ Actually, all I needed to get the flag for level 109 is just to run the program 
 
 Just happy that I was able to get this one very quickly. Shows that I am understanding something!
 
-```C
-#include <stdio.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-
-int pwncollege() {return 0;} 
-
-int main(int argc, char *argv[]) {
-
-    char *args[] = {"/challenge/embryoio_level119", NULL};
-    int fin = open("input_pipe", O_RDWR);
-    int fout = open("output_pipe", O_WRONLY);
-
-    if (fork() == 0) {
-        dup2(fin,0);
-        dup2(fout,1);
-        int status = execve(args[0], args, NULL);
-    } else {
-        waitpid(-1, 0, WCONTINUED);
-    }   
-
-    return 0;
-}
-```
-
 ### Level 125
 
 This problem took me so freaking long! I was confused on the named pipes concept for so long. Turns out that I didn't submit my result! I need to add `\n` so that the result actually gets submitted. I still don't know why I need the `flush` function. I think it is because it forces the result to be submitted immediately.
-
-**script.sh**
-```bash
-/challenge/embryoio_level125 < input_pipe > output_pipe &
-python3 py.py
-```
-
-**py.py**
-```python
-ipipe = open("input_pipe", "w")
-opipe = open("output_pipe", "r")
-for line in opipe:
-    if "CHALLENGE" in line:
-        x = line.split(': ')[1].strip()
-        result = eval(x)
-        ipipe.write(str(result)+"\n")
-        ipipe.flush()
-    elif "pwn" in line:
-        print(line)
-ipipe.close()
-opipe.close()
-```
 
 ### Level 130
 
@@ -406,80 +238,8 @@ Use `exec 3<>/dev/tcp/$host/$port`. Then use `echo $answer >&3` to input answer.
 
 I keep forgetting to add a **new line**, which is what submits the answer.
 
-```python
-import socket
-
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-
-    sock.connect(('localhost', 1504))
-
-    while True:
-        line = sock.recv(1024).decode()
-        if not line:
-            break
-        print(line)
-        if "CHALLENGE" in line:
-            x = line.split(': ')[1].strip()
-            r = eval(x)
-            ans = str(r) + "\n"
-            sock.sendall(ans.encode())
-```
-
 ### Level 142
 I did not feel like figuring out how to do all the above in C, mainly string parsing, which is surprisingly nontrivial. So my strategy is to pipe the read socket data into a python program which will do the string parsing for me to find the arithmetic expression and solve it. Then I have the C program prompt me for the answer and send that answer into the socket. Since there is only 5 math expressions, this is feasible.
-
-```C
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include <arpa/inet.h>
-#include <fcntl.h>
-
-int pwncollege() {return 0;} 
-
-int main(int argc, char *argv[]) {
-    int sockfd;
-    struct sockaddr_in serv_addr;
-    char buffer[1024];
-
-    // Create socket
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd == -1) {
-        perror("Socket creation failed");
-        exit(EXIT_FAILURE);
-    }
-
-    // Server address setup
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(1493);
-    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-    // Connect to server
-    if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
-        perror("Connection failed");
-        exit(EXIT_FAILURE);
-    }
-
-    int opipe = open("output_pipe", O_WRONLY);
-    char ans[100];
-    ssize_t bytes_received;
-
-    while ((bytes_received = recv(sockfd, buffer, sizeof(buffer), 0)) > 0) {
-
-        buffer[bytes_received] = '\0';
-        printf("Recieved from socket: %s", buffer);
-        write(opipe, buffer, bytes_received);
-
-        if (strstr(buffer, "CHALLENGE") != NULL) {
-            printf("Answer: ");
-            fgets(ans,100,stdin);
-            send(sockfd, ans, strlen(ans), 0); 
-        }
-    }
-    return 0;
-}
-```
 
 ## Assembly Crash Course
 

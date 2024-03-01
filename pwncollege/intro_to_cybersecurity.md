@@ -422,7 +422,7 @@ One application of web security is the prevention of random people from robbing 
     ' or 1=1 --
     ```
     - A solution to this is to use `?`, which parses first, then fills in the data.
-- Stack Overflow return address
+- Stack Overflow ret2win
 
 ### Same-Origin Policy
 
@@ -435,25 +435,11 @@ Very interesting problem. My only trouble was not knowing how to write the scrip
 ### Level 11
 Very cool problem! To solve this problem, you have to host your own server at `hacker.localhost`. Luckily the `/etc/hosts` file already has `hacker.localhost` listed at `127.0.0.1`. Then you have to configure the server so that it redirects any connection to the `challenge.localhost/leak` page.
 
-```python
-class RedirectHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(302)
-        self.send_header('Location', 'http://challenge.localhost/leak')
-        self.end_headers()
-```
-
 ### Level 12
 The solution here is to host a web page which actually posts on load with the python server.
 
-```python
-class RedirectHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-Type', 'text/html')
-        self.end_headers()
-     
-        with open("index.html", "r") as f:
-            self.wfile.write(f.read().encode())
-```
+### Level 13
+This level uses the Javascript `fetch()` to inject XSS code into the `/echo` endpoint and directs the response into our Python HTTP server. I had trouble with this level because I don't understand the `fetch()` function and how to use the python http.server module. p
 
+### Level 15
+This took me longer than I thought it would. The way to solve this level is to first turn the `win_address` hex into an int and then turn this into into bytes. Then it's just finding the right padding (remember that the saved frame pointer takes 8 bytes). Now you have the right padding and the win_address, encode the payload, and send it.
