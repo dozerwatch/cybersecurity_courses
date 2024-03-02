@@ -425,7 +425,29 @@ One application of web security is the prevention of random people from robbing 
 - Stack Overflow ret2win
 
 ### Same-Origin Policy
-
+- The policy the browser uses to decide how to handle requests and responses to different origins.
+- HTTP URL
+    - `scheme://host:port/path?query#fragment`
+- Origin
+    - `(scheme, host, port)`
+- Sending HTTP Requests
+    - Same origin - anything goes
+    - Cross origin - Simple Requests allowed
+- Reading HTTP Responses
+    - Same origin - anything goes
+    - Cross origin - HTML-Embeds allowed
+- Effective Top-Level Domains + 1 = Site
+- Same-Site Cookie Attribute
+    - SameSite = None: Cookie is sent in cross-site requests
+    - SameSite = Lax: Cookie is sent in cross-site top-level navigation GET requests
+    - SameSite = Strict: Cookie is not sent in cross-site requests
+- Domain Cookie Attribute
+    - Cookie is sent in requests to specified domain and any subdomains if specified
+    - Otherwise only sent to setting host
+- Path Cookie Attribute
+    - Cookie is sent in requests to the path and any other subpath
+- Cross-Origin Resource Sharing (CORS)
+    - When making a non-simple request in a browser, the browser checks if it is allowed to make such a request.
 
 ## Problems
 
