@@ -40,22 +40,6 @@ So `sort_max = 1` causing the second for loop to not run at all, meaning the who
 
 
 
-
-gcc -nostdlib -static -o code shellcode.s && objcopy --dump-section .text=raw code && ls -l && objdump -M intel -d code
-
-
-
-0x7f -  0111 1111 - DEL
-        0011 1111 - 0x3f
-
-0x62 -  0110 0010 - 
-        1100 0100 - 0xa4
-        0011 0001 - 0x31
-
-
-
-
-
 ## Reverse Engineering
 
 
