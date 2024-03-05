@@ -18,7 +18,7 @@
 **Level 5:** `inc byte ptr [rip]` `.byte 0xcb` \
 **Level 7:** `chmod` \
 **Level 8:** `ln -s` and `chmod` \
-**Level 9:** `jmp` \ 
+**Level 9:** `jmp`
 
 ### Level 10 
 My level 8 worked for this level. The reason is that my raw shellcode is only 16 bytes, which causes the sort filter to not even run! The sort code is 
