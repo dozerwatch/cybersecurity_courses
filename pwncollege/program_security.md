@@ -43,13 +43,13 @@ Wow what a level! For this level, you had only 6 bytes of shellcode. So every by
 
 We use the 2 stage method to solve this level. Stage 1 reads a large number of bytes from stdin into the RIP register. For stage 2, we can write anything, really, to get the flag since there is so much space left. First, specific to this challenge, we must get to where RIP is pointing. Stage 1 actually places us behind where RIP is pointing. We can do this with a bunch of `NOP` instructions. Now we write our stage 2 code and get the flag.
 
-
-
 ## Reverse Engineering
 
 
 ## Problems
 
+**6.1:** `char buf[19]` \
+**:**
 
 ## Memory Errors
 
