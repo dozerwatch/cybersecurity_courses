@@ -2,11 +2,8 @@
 - [Shellcode Injection](#shellcode-injection)
     - [Problems](#problems)
 - [Reverse Engineering](#reverse-engineering)
-    - [Problems](#problems-1)
 - [Memory Errors](#memory-errors)
-    - [Problems](#problems-2)
 - [Program Exploitation](#program-exploitation)
-    - [Problems](#problems-3)
 
 ## Shellcode Injection
 
@@ -46,18 +43,7 @@ We use the 2 stage method to solve this level. Stage 1 reads a large number of b
 ## Reverse Engineering
 
 
-## Problems
-
-**6.1:** `char buf[19]` \
-**:**
-
 ## Memory Errors
 
 
-## Problems
-
-
 ## Program Exploitation
-
-
-## Problems
