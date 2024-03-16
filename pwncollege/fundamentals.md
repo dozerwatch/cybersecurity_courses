@@ -7,7 +7,6 @@
     - [File System](#file-system)
     - [Environment Variables](#environment-variables)
     - [Links](#links)
-    - [Problems](#problems)
 
 - [Assembly Crash Course](#assembly-crash-course)
     - [Computer Architecture](#computer-architecture)
@@ -172,74 +171,6 @@
 I learned how to use pipes to interact with programs in python with the subprocess module. I learned how to use named pipes to interact with processes (shell to python, C to python) and about when they block and how to prevent it. I learned about how processes are started -- with fork and execve. I learned how to use dup2. 
 
 This was a very challenging module and therefore a very rewarding one. 
-
-### Level 53
-
-My solution is basically implementing `echo sdvuenyk | rev | /challenge` in ipython using the subprocess module. I do not understand why I have to exit the program with `ctrl+d` to get the flag.
-
-### Level 71
-
-The important take away here is that the syntax for the if condition is very particular. The spaces in `if [ <cond> ]` are very much **needed**. This is because `[` is actually a command. Also, after bash sees `if` and `then`, it is searching for `elif`, `else` not `elif[` or `else[`, so the space between the else/elif and the openning bracket is needed.
-
-### Level 73
-
-The parent working directory is `/home/hacker` as the bash script is executed in that directory. The script changes directory to the desired `tmp` directory and executes the challenge. So the challenge is launched in the `tmp` directory, meaning the current working directory will be the `tmp` directory. 
-
-The key part being `exec`, which replaces the shell process with the specified command.
-
-### Level 80
-
-I was really struggling with string concatenation in C, because I am horribly rusty in the language. Eventually, I got it. This challenge wasn't too hard. I was struggling because I am rusty in C.
-
-### Level 92
-
-This topic is new to me, so this level took me a long time. Lots of trials and researching. I think I understand it now.
-
-We redirect stdin and stdout of the challenge to two separate named pipes. We input the password into the input pipe and read the output of the challenge from the output pipe. 
-
-I was having trouble with this challenge because I was trying to use the same named pipe for both stdin and stdout redirection. I also don't really understand the necessity of backgrounding the tasks.
-
-### Level 93
-
-I don't fully understand how I got the answer for this problem. The part I am confused on is how the `output_pipe` wasn't closed after I read from it the first time. Maybe it is because I opened the challenge for both reading and writing?
-
-### Level 106
-
-My confusion:
-
-For the shellcode version of this level, the output of the /challenge is printed out BEFORE I input. For the python version (I am using subprocess), no output is printed out until AFTER I input. What is the difference between the two versions?
-
-I had to open the `input_pipe` for read and write so it doesn't block. Then I could see the output, allowing me to input the right number.
-
-### Level 107
-`dup2` and `close_fds` are the crucial tools to solving this level. Why `dup2`? 
-
-For level 108 and 109, I only change the new fd in `dup2`. Level 108 works, but 109 fails. Why is this the case? Also using 0 or 2, works! Just using 1 fails. 
-
-Actually, all I needed to get the flag for level 109 is just to run the program and input the requested password. Maybe the program was coded wrong?
-
-### Level 119
-
-Just happy that I was able to get this one very quickly. Shows that I am understanding something!
-
-### Level 125
-
-This problem took me so freaking long! I was confused on the named pipes concept for so long. Turns out that I didn't submit my result! I need to add `\n` so that the result actually gets submitted. I still don't know why I need the `flush` function. I think it is because it forces the result to be submitted immediately.
-
-### Level 130
-
-The trick here is to open both named pipes for reading and writing.
-
-### Level 140
-
-Use `exec 3<>/dev/tcp/$host/$port`. Then use `echo $answer >&3` to input answer.
-
-### Level 141
-
-I keep forgetting to add a **new line**, which is what submits the answer.
-
-### Level 142
-I did not feel like figuring out how to do all the above in C, mainly string parsing, which is surprisingly nontrivial. So my strategy is to pipe the read socket data into a python program which will do the string parsing for me to find the arithmetic expression and solve it. Then I have the C program prompt me for the answer and send that answer into the socket. Since there is only 5 math expressions, this is feasible.
 
 ## Assembly Crash Course
 

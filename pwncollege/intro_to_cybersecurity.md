@@ -6,7 +6,6 @@
     - [Transmission Control Protocol](#transmission-control-protocol)
     - [ARP](#address-resolution-protocol)
     - [CIDR](#cidr-notation-classless-inter-domain-routing)
-    - [Problems](#problems)
 - [Cryptography](#cryptography)
     - [One-time-pad](#one-time-pad)
     - [Encryption Properties](#encyption-properties)
@@ -17,7 +16,6 @@
     - [RSA Key Generation](#rsa-key-generation)
     - [Hashing](#hashing)
     - [Trust](#trust)
-    - [Problems](#problems-1)
 - [Web Security](#web-security)
     - [Injection](#injection)
     - [Same-Origin Policy](#same-origin-policy)
@@ -159,23 +157,6 @@
 - Classless addresses
     - Uses variable length subnet masking (VLSM) to alter the ratio between network and host adresses
         - A subsubet mask returns the network's address value from IP address by turning host address to zeros.
-
-## Problems
-
-### Level 8
-
-The difference between `sendp` and `send` is that the former sends packets at layer 2 while the latter sends packets are layer 3. What I don't understand is how this difference (or possibly something else) prevents me from getting the flag if I use `send` instead of `sendp`. 
-
-Note from future: It is because `send` does not recieve responses.
-
-### Level 13
-
-**ARP Poisoning** - a technique by which an attacker sends (spoofed) ARP messages onto a local area network. Generally, the aim is to associate the attacker's MAC address with the IP address of another host, such as the default gateway, causing any traffic meant for that IP address to be sent to the attacker instead.
-- This works because ARP is a stateless protocol. Network hosts will automatically cache any **ARP replies** they receive, regardless of whether network hosts requested them.
-
-### Level 14
-
-This challenge uses a man-in-the-middle attack known as **active eavesdropping**. We ARP poison both of the given IP's ARP cache and to intercept their communication. We see there is a "FLAG" command. Our goal is to inject this command into the communication stream to get our flag.
 
 ## Cryptography
 
@@ -345,44 +326,6 @@ Certificate
 
 If X and Y are equal, then we can trust the public key in the certificate. This is because the Root of Trust says this is the actual public key and I trust the Root of Trust.
 
-## Problems
-
-**Level 1:** Base64 decode \
-**Level 2:** One-time-pad decode \
-**Level 4:** AES:ECB key given decode \
-**Level 6:** Diffie-Hellman key exchange \
-**Level 7:** RSA decode given $d$ \
-**Level 8:** RSA decode given $p, q$ \
-**Level 9:** SHA256 hash collision, first 2 bytes \
-**Level 10:** Proof of work, first 2 bytes are null bytes \
-**Level 11:** RSA decrypt the challenge \
-**Level 12:** Level 9 and 11 combined
-
-### Level 3
-This problem uses the crib drag attack. We are able to get two ciphertext encrypted with the same key and know $m_2$.
-
-![RSA](/pwncollege/images/levelthree.png)
-
-### Level 5
-This problem uses a chosen plaintext attack on AES in ECB mode. We are allowed to prepend data to the flag. From the source code:
-
-`ciphertext = cipher.encrypt(pad(plaintext    _prefix + flag, cipher.block_size))`
-
-I used [this](https://crypto.stackexchange.com/questions/42891/chosen-plaintext-attack-on-aes-in-ecb-mode) for help.
-
-### Level 13
-This problem requires us to make a user certificate that is signed by root. We send this certificate -- the certificate itself and its signature. We get the flag encrypted with our own RSA public key.
-
-### Level 14
-Perform a Diffie-Hellman key exchange. Use this key to get an AES CBC cipher. Sign a certificate with root private key. Sign a given certificate with user private key. Use AES CBC cipher to decrypt flag.
-
-I had so much trouble with this level because I initialized both ciphers (below) at once. It made the decryption of my inputs wrong.
-```python
-cipher_encrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
-
-cipher_decrypt = AES.new(key=key, mode=AES.MODE_CBC, iv=b"\0"*16)
-```
-
 ## Web Security
 One application of web security is the prevention of random people from robbing your bank acount online.
 
@@ -448,20 +391,3 @@ One application of web security is the prevention of random people from robbing 
     - Cookie is sent in requests to the path and any other subpath
 - Cross-Origin Resource Sharing (CORS)
     - When making a non-simple request in a browser, the browser checks if it is allowed to make such a request.
-
-## Problems
-
-### Level 7
-Very interesting problem. My only trouble was not knowing how to write the script. Turns out I had to use the `requests` module, mainly `requests.Session()`. Next is just trying out all possible characteres with the `post` function and adding the correct characters to the flag.
-
-### Level 11
-Very cool problem! To solve this problem, you have to host your own server at `hacker.localhost`. Luckily the `/etc/hosts` file already has `hacker.localhost` listed at `127.0.0.1`. Then you have to configure the server so that it redirects any connection to the `challenge.localhost/leak` page.
-
-### Level 12
-The solution here is to host a web page which actually posts on load with the python server.
-
-### Level 13
-This level uses the Javascript `fetch()` to inject XSS code into the `/echo` endpoint and directs the response into our Python HTTP server. I had trouble with this level because I don't understand the `fetch()` function and how to use the python http.server module. p
-
-### Level 15
-This took me longer than I thought it would. The way to solve this level is to first turn the `win_address` hex into an int and then turn this into into bytes. Then it's just finding the right padding (remember that the saved frame pointer takes 8 bytes). Now you have the right padding and the win_address, encode the payload, and send it.
