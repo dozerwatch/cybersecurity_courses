@@ -255,9 +255,33 @@ int main() {
     write(1, buf, 100);
 }
 ```
+Overreading a buffer will expose excess data on the stack. Some of this excess data could include the stack canary, pointers to the stack, pointers to libraries, and more.
 
+**Cause of Disclosure 2: String Termination** 
+```C
+int main() {
+    char name[10] = {0};
+    char flag[64];
+    read(open("/flag", 0), flag, 64);
+    printf("Name: ");
+    read(0, name, 10); // <-- BUG!
+    printf("Hello %s!\n", name);
+}
+```
+Strings in C do not have explicit size metadata in memory. Instead they are *null-terminated*. A problem is that developers often forget about the null byte, like the example above. This leads to an attacker being able to disclose additional data that were meant to be secret, like the flag in the example above.
 
+You cannot leak the canary as it begins with a null byte.
 
+**Cause 3: Uninitialized Data**
+```C
+int main() { foo(); bar(); }
+void foo() { char buf[64]; read(open("/flag", 0), buf, 64); }
+void bar() { char buf[64]; write(1, buf, 64); }
+```
+C  doesn't clean up for you. In the example above, `foo` reads the flag onto the stack and returns. This tears down the stack frame, but C does this by just moving the stack pointer. The data still remains. Thus the `bar` function writes the data previously on the stack (the flag) into standard output, and we are able to disclose the flag.
 
+The best way to combat this is to initialize your data.
+
+Modern compiler optimizers can inadvertently cause a disclosure by uninitialized data. Say we erase all the memory after calling `foo` by adding `memset(buf, 0, 64)` in `foo`. If we optimize our code when compiling, the optimizer will remove the `memset` function as it is *really doing anything* in the optimizer's eyes.
 
 ## Program Exploitation
