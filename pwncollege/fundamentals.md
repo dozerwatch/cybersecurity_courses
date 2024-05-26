@@ -1,20 +1,22 @@
 # Fundamentals
-
-- [Program Interaction](#program-interaction)
+1. [Program Misuse](#program-misuse)
+2. [Program Interaction](#program-interaction)
     - [Binary Files](#binary-files)
     - [Command Line](#command-line)
     - [Process](#process)
     - [File System](#file-system)
     - [Environment Variables](#environment-variables)
     - [Links](#links)
-
-- [Assembly Crash Course](#assembly-crash-course)
+3. [Assembly Crash Course](#assembly-crash-course)
     - [Computer Architecture](#computer-architecture)
     - [Assembly](#assembly)
     - [Data](#data)
     - [Registers](#registers)
     - [Memory](#memory)
     - [Control Flow](#control-flow)
+
+## Program Misuse
+
 
 ## Program Interaction
 ###  Binary Files
