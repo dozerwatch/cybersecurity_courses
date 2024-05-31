@@ -21,6 +21,10 @@
     - [Injection](#injection)
     - [Same-Origin Policy](#same-origin-policy)
 
+
+
+
+
 ## Talking Web
 The *World Wide Web* is a web of information connected to other information via hypertexts. 
 
@@ -28,7 +32,27 @@ The *WWW* works because all systems speak the standardized language, HTTP.
 
 The *Internet* is the backbone of the *WWW*. It provides a way to transmit data from one system to another. 
 
-The *TCP/IP Protocol* defines how all systems must transmit data.
+The *TCP/IP Protocol* defines how all systems must transmit data. *HTTP* is standardized through RFCs. The first one is RFC 1945.
+
+```html
+Request-Line = Method        Request-URI  HTTP-Version  CRLF
+Status-Line  = HTTP-Version  Status-Code  Reason-Phrase CRLF
+
+HTTP URL Scheme
+<scheme>://<host>:<port>/<path>?<query>#<fragment>
+
+Content-Type: application/x-www-form-urlencoded - name=Hong
+Content-Type: application/json                  - {"name": "Hong"}
+```
+
+HTTP is a stateless protocol, but can be made stateful using HTTP Headers, namely cookies.
+
+Session ID help combat the security concerns of using raw state in cookies.
+
+
+
+
+
 
 
 ## Building A Web Server
@@ -69,6 +93,12 @@ The *TCP/IP Protocol* defines how all systems must transmit data.
 - `fork` creates a new child process by **duplicating** the calling parent process
     - on success, `PID` of child is returned to the parent and `0` is returned to child
     - both processes will run the same code
+
+
+
+
+
+
 
 ## Intercepting Communication
 ![dynamic network](/pwncollege/images/dynamic_network.png)
