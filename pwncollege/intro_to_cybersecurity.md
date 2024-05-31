@@ -1,4 +1,5 @@
 # Introduction to Cybersecurity
+- [Talking Web](#talking-web)
 - [Building A Web Server](#building-a-web-server)
 - [Intercepting Communication](#intercepting-communication)
     - [Ethernet](#ethernet)
@@ -19,7 +20,16 @@
 - [Web Security](#web-security)
     - [Injection](#injection)
     - [Same-Origin Policy](#same-origin-policy)
-    
+
+## Talking Web
+The *World Wide Web* is a web of information connected to other information via hypertexts. 
+
+The *WWW* works because all systems speak the standardized language, HTTP.
+
+The *Internet* is the backbone of the *WWW*. It provides a way to transmit data from one system to another. 
+
+The *TCP/IP Protocol* defines how all systems must transmit data.
+
 
 ## Building A Web Server
 - CPUs contain registers, have a small amount of memory, and can perform a lot of operations.
