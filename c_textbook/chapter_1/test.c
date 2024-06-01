@@ -1,57 +1,33 @@
 #include <stdio.h>
 
-int main()
-{
-    // Frequency of characters a-z, whitespace, and other
+void delete_trailing(char [], int);
 
-    // Declare variables and arrays
-    int c, i, j, nwhite, nother;
-    int nlower[26];
-    int nupper[26];
-    int ndigit[10];
-    
-    // Initialize arrays
-    nwhite = nother = 0;
-    for (i = 0; i < 26; ++i)
-        nlower[i] = nupper[i] = 0;
-    for (i = 0; i < 10; ++i)
-        ndigit[i] = 0;
-    
-    
-    while ((c = getchar()) != EOF)
-        if (c >= 'a' && c <= 'z')
-            ++nlower[c-'a'];
-        else if (c >= 'A' && c <= 'Z')
-            ++nupper[c-'A'];
-        else if (c >= '0' && c <= '9')
-            ++ndigit[c-'0'];
-        else if (c == ' ' || c == '\n' || c == '\t')
-            ++nwhite;
+int main() {
+
+    int c, i;
+    char line[1000];
+
+    i = 0;
+    while ( (c=getchar()) != EOF ) {
+        line[i] = c;
+        ++i;
+        if (c == '\n') {
+            if (i == 0) continue;
+            else {
+                line[i] = '\0';
+                printf("%s", line);
+                i = 0;
+            }
+        }
+    }
+
+    return 0;
+}
+
+void delete_trailing(char line[], int size) {
+    for (int i = size-2; i >= 0; --i)
+        if (line[i] == ' ' || line[i] == '\t')
+            line[i] = '\0';
         else
-            ++nother;
-    
-    for (i = 0; i < 10; ++i) {
-        printf("%d: ", i);
-        for (j = 0; j < ndigit[i]; ++j)
-            printf("-");
-        printf("\n");
-    }
-    for (i = 0; i < 26; ++i) {
-        printf("%c: ", i+97);
-        for (j = 0; j < nlower[i]; ++j)
-            printf("-");
-        printf("\n");
-        printf("%c: ", i+65);
-        for (j = 0; j < nupper[i]; ++j)
-            printf("-");
-        printf("\n");
-    }
-    printf("white space: ");
-        for (j = 0; j < nwhite; ++j)
-            printf("-");
-    printf("\n");
-    printf("other: ");
-        for (j = 0; j < nother; ++j)
-            printf("-");
-        
+            break;
 }

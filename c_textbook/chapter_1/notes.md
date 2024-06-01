@@ -1,5 +1,9 @@
 # Chapter 1
 
+- [Getting Started](#11-getting-started)
+- [Variables and Arithmetic Expressions](#12-variables-and-arithmetic-expressions)
+- [For Statement](#13-the-for-statement)
+
 ## 1.1 Getting Started
 
 The type specifier for `main()` can be missing and the program can still be compiled.
@@ -178,3 +182,40 @@ main()
 Why doesn't the `while` loop require brackets?
 
 ## 1.7 Functions
+
+With properly designed functions, it is possible to ignore *how* a job is done; knowing *what* is done is sufficient.
+
+```c
+#include <stdio.h>
+
+int power(int m, int n);
+
+int main()
+{
+    int i;
+    for (i = 0; i < 10; ++i)
+        printf("%d %d %d\n", i, power(2,i), power(-3,i));
+    return 0;
+}
+
+int power(int m, int n) {
+    int i, p;
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * m;
+    return p;
+}
+```
+
+## 1.8 Arguments - Call by Value
+
+In C, all function arguments are passed by value. This means that the value is copied and used by the function. Anything done to this value has no effect on the actual argument that the function was called with.
+
+However, it is possible to change the original argument if it was passed as a pointer to the variable.
+
+With arrays, the address of the beginning of the array is passed to the function. There is no copying of the array elements.
+
+## 1.9 Character Arrays
+
+A string constant like `hello\n` is stored as an *array of characters* containing the string and terminated with a null byte (`\0`).
+
