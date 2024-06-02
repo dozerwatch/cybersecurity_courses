@@ -56,43 +56,50 @@ Session ID help combat the security concerns of using raw state in cookies.
 
 
 ## Building A Web Server
-- CPUs contain registers, have a small amount of memory, and can perform a lot of operations.
-- We are **not** allowed to manipulate hardware directly, instead we have to talk with the **OS** using `syscalls`.
-- The **kernal memory** keeps track of the state of processes.
-    - located at the bottom of memory (high addresses)
-    - processes are just **data** in kernal memory
-    - `syscalls` manipulate kernal memory
-- `struct task_struct` is a blob is data managing the state of a process.
-- `struct task_struct *current` is a **global** variable that keeps track of the **current executing process**.
-- `socket` creates an endpoint for communication
-- `bind` assigns an address to a socket
-    - the address follows the structure
-        ```C
-        struct sockaddr_in {
-            uint16_t sa_family;
-            uint8_t sa_data[14];
-        };
-        ```
+
+### Linux Processes
+We are **not** allowed to manipulate hardware directly, instead we have to talk to the **OS** using `syscalls`.
+
+The **kernal** keeps track of the state of processes. Processes are just **blobs of data** living in kernal memory, which is located at the bottom of memory (high address).
+
+`syscalls` just manipulate this kernal memory. 
+
+The **kernal**, in some sense, is a library of code. A `syscall` basically redirects control flow into kernal controlled code.
+
+`struct task_struct` is the blob is data managing the state of a process in kernal memory.
+
+`struct task_struct *current` is a global variable that keeps track of the current executing process.
+
+### Network System Calls
+
+- `socket` is the network version of a file. It is also a type of file! It creates an endpoint for communication.
+- An address follows the structure:
+    ```C
+    struct sockaddr_in {
+        uint16_t sa_family;
+        uint8_t sa_data[14];
+    };
+    ```
     - `uint16_t` represents 2 bytes
     - `uint8_t` represents 1 byte
-    - the address structure for **Internet** is
-        ```C
-        struct sockaddr_in {
-            uint16_t sin_family;
-            uint16_t sin_port;
-            uint32_t sin_addr;
-            uint8_t __pad[8];
-        };
-        ```
-        - `AF_INET` has value `2` and is a part of `sin_family`.
-        - `htons`, host to network, converts little-endian to big-endian.
-        - `0.0.0.0` binds to any network interface.
-- Networking likes to work in **big-endian**.
+
+- The address structure for **Internet** is:
+    ```C
+    struct sockaddr_in {
+        uint16_t sin_family;
+        uint16_t sin_port;
+        uint32_t sin_addr;
+        uint8_t __pad[8];
+    };
+    ```
+    - `AF_INET` has value `2` and is a part of `sin_family`.
+    - `htons`, host to network, converts little-endian to big-endian.
+    - `0.0.0.0` binds to any network interface.
+
+Networking likes to work in **big-endian**.
+- `bind` assigns an address to a socket.
 - `listen` listens for incoming connection requests and puts them into a backlog queue.
 - `accept` extracts first connection request on queue and creates a new connected socket, returning a new FD for it.
-- `fork` creates a new child process by **duplicating** the calling parent process
-    - on success, `PID` of child is returned to the parent and `0` is returned to child
-    - both processes will run the same code
 
 
 
