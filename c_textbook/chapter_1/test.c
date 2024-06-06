@@ -1,33 +1,54 @@
 #include <stdio.h>
 
-void delete_trailing(char [], int);
+#define MAXLINE 1000
+
+int _getline(char [], int);
+
+void reverse(char []);
 
 int main() {
 
-    int c, i;
-    char line[1000];
+    int len;
+    char line[MAXLINE];
 
-    i = 0;
-    while ( (c=getchar()) != EOF ) {
-        line[i] = c;
-        ++i;
-        if (c == '\n') {
-            if (i == 0) continue;
-            else {
-                line[i] = '\0';
-                printf("%s", line);
-                i = 0;
-            }
-        }
+    while ((len = _getline(line, MAXLINE)) > 0) {
+        reverse(line);
+        printf("%s", line);
     }
 
     return 0;
 }
 
-void delete_trailing(char line[], int size) {
-    for (int i = size-2; i >= 0; --i)
-        if (line[i] == ' ' || line[i] == '\t')
-            line[i] = '\0';
-        else
-            break;
+int _getline(char s[], int lim)
+{
+    int c, i;
+    for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
+        s[i] = c;
+    if (c == '\n') {
+        s[i] = c;
+        ++i; 
+    }
+    s[i] = '\0';
+    return i; 
+}
+
+void reverse(char s[]) {
+    int i, j;
+    char temp;
+
+    for (i = 0; s[i] != '\0'; ++i);
+
+    --i;
+
+    if (s[i] == '\n') --i;
+
+    j = 0;
+
+    while (j < i) {
+        temp = s[j];
+        s[j] = s[i];
+        s[i] = temp;
+        ++j;
+        --i;
+    } 
 }

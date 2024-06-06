@@ -1,8 +1,8 @@
 # Chapter 1
 
-- [Getting Started](#11-getting-started)
-- [Variables and Arithmetic Expressions](#12-variables-and-arithmetic-expressions)
-- [For Statement](#13-the-for-statement)
+- [1.1 Getting Started](#11-getting-started)
+- [1.2 Variables and Arithmetic Expressions](#12-variables-and-arithmetic-expressions)
+- [1.3 For Statement](#13-the-for-statement)
 
 ## 1.1 Getting Started
 
