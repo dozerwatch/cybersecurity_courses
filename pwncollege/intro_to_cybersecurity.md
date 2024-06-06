@@ -1,6 +1,8 @@
 # Introduction to Cybersecurity
 - [Talking Web](#talking-web)
 - [Building A Web Server](#building-a-web-server)
+    - [Linux Processes](#linux-processes)
+    - [Network System Calls](#network-system-calls)
 - [Intercepting Communication](#intercepting-communication)
     - [Ethernet](#ethernet)
     - [Internet](#internet)
@@ -110,13 +112,16 @@ Networking likes to work in **big-endian**.
 ## Intercepting Communication
 ![dynamic network](/pwncollege/images/dynamic_network.png)
 
-- There are three different ways to intercept communication:
-    1. At the source
-    2. Middle-man
-    3. At the destination
+**In order to attack a system, we must understand the system.**
+
+There are three different ways to intercept communication:
+1. At the source
+2. Middle-man
+3. At the destination
 
 ### Ethernet
 - physically connected
+- Hosts are directly linked to each other.
 - **(Host A --> Host B)**: A: eth0 --> vethA --> bridge0 --> vethB --> B: eth0
 - Ethernet Packet Structure:
     ```
@@ -189,33 +194,45 @@ Networking likes to work in **big-endian**.
 
 ### CIDR Notation (Classless Inter-Domain Routing)
 - An IP address allocation method that improves data routing efficiency on the Internet.
-- Organizations use CIDR to allocate IP addresses flexibly and efficiently in their networks.
 - An IP address has 2 parts:
-    1. Network address --> networ's unique identifier
+    1. Network address --> network's unique identifier
     2. Host address --> host identifier on the network
 - Classful addresses:
     - has fixed length for addresses
     - the number of bits allocated to network and host portions are fixed
-    - IPv4: 32 bits
+    - IPv4: 32 bits, 4 bytes
     - Three classes of IPv4 addresses:
         1. Class A: 8 bit network
+            -  For example, consider 44.0.0.1, where 44 is the network address and 0.0.1 is the host address.
         2. Class B: 16 bit network
-        3. Class C: 24 bit network 
+            - For example, consider 128.16.0.2, where 128.16 is the network address and 0.2 is the host address.
+        3. Class C: 24 bit network
+            - For instance, consider 192.168.1.100, where 192.168.1 is the network address and 100 is the host address.
 - Classless addresses
-    - Uses variable length subnet masking (VLSM) to alter the ratio between network and host adresses
-        - A subsubet mask returns the network's address value from IP address by turning host address to zeros.
+    - Uses *variable length subnet masking* (VLSM) to alter the ratio between network and host adresses
+    - A *subsubet mask* returns the network's address value from IP address by turning host address to zeros.
+    - A *CIDR IP address* appends a suffix value stating the **number of network address prefix bits** to a normal IP address.
+        - For example, 192.0.2.0/24 is an IPv4 CIDR address where the first 24 bits, or 192.0.2, is the network address. 
+
+
+
+        
+
+
 
 ## Cryptography
 
 Alice <-------> Mallory <-------> Bob
 
-- We might have to send data through some third party, either malicious or just the Internet
-    | CIA | Property 
-    | --- | -----------
-    | Confidentiality | Mallory can't view the contents of the data. The data is secret.
-    | Integrity | Mallory can't change the data. The data remained the same throughout the route.
-    | Authenticity | It is in fact Alice who sent the data to Bob. Mallory did not send the data. The data is sent by the expected sender.
-- Cryptography guarantees the properties of CIA.
+We might have to send data through some third party, either malicious or just the Internet.
+
+| CIA | Property 
+| --- | -----------
+| Confidentiality | Mallory can't view the contents of the data. The data is secret.
+| Integrity | Mallory can't change the data. The data remained the same throughout the route.
+| Authenticity | It is in fact Alice who sent the data to Bob. Mallory did not send the data. The data is sent by the expected sender.
+
+Cryptography guarantees the properties of CIA.
 
 ### One-time-pad
 - Encrpytion:
@@ -229,6 +246,9 @@ Alice <-------> Mallory <-------> Bob
     - XOR each bit of ciphertext with key
     - XOR is its own inverse
     - $(p \oplus k) \oplus k = p \oplus (k \oplus k) = p \oplus 0 = p$
+- Flaws:
+    - Frequency analysis exploit on repeating keys
+    - If we can securely transfer key and key is as long as plaintext, why not just send plaintext?
 
 ### Encyption Properties
 - Confusion
@@ -237,36 +257,42 @@ Alice <-------> Mallory <-------> Bob
     - Small change in plaintext dramatically changes ciphertext
 
 ### Advanced Encryption Standard (AES)
+- substitution-permutation network
 - satisfies confusion and diffusion
 - key sizes: 128 / 192 / 256 bits
 - block size: 128 bits, 16 bytes
-- encrypts exactly 128 bits of plaintext to exactly 128 bits of ciphertext
+- encrypts **exactly** 128 bits of plaintext to **exactly** 128 bits of ciphertext
 
 **What happens if we only have 13 bytes of plaintext to encrypt?**
 - Pad with null bytes?
-    - No! Then we don't know what null bytes were intentional or padded
-    - Solution: PCK #7
-        - append number of bytes padded to the end
-        - if 3 bytes were added, append 030303 to end of plaintext
+    - No! Then we don't know what null bytes were intentional or padded.
+- Solution: **PCK #7**
+    - append number of bytes padded to the end
+    - Ex: if 3 bytes were added, append 030303 to end of plaintext
 
 **What happens if we have more than 16 bytes?**
-- Solution: Electronic Codebook (ECB)
+- Solution: **Electronic Codebook** (ECB)
     - Pad out to a multiple of 16 bytes
     - split plaintext into blocks of 16 bytes
+- **!! PROBLEM with ECB !!**
 
-**!! PROBLEM with ECB !!**
-- If plaintext data has a lot of similar or repeating blocks, the ciphertext blocks will also be similar or repeating.
-- ECB Penguin
-- Solution: Cipher Block Chaining (CBC)
-    - XOR previous block's ciphertext with plaintext and encrypt this
-    - XOR first block of plaintext with an initialization vector
-    - This is very SLOW! Each block of plaintext relies on the previous block's ciphertext. Thus encryption is sequential, meaning slow!
-- Solution: Counter (CTR)
-    - Generate a random 16 byte value
-    - Add 1 to this value for next block and so on
-    - Encrypt this value
-    - XOR the encrypted value with plaintext
-    - This encryption and XOR can all be done in parallel, thus FAST!
+    - *ECB Penguin*: If plaintext data has a lot of similar or repeating blocks, the ciphertext blocks will also be similar or repeating. This destroys the *CONFIDENTIAL* property.
+
+    - Solution: **Cipher Block Chaining** (CBC)
+        - XOR first block of plaintext with an initialization vector and encrypt result.
+        - XOR previous block's ciphertext with current block of plaintext and encrypt result.
+        - Flaw: 
+            - This is very slow! Each block of plaintext relies on the previous block's ciphertext. Thus encryption is sequential, meaning SLOW!
+
+    - Solution: **Counter** (CTR)
+        - Generate a random 16 byte value, called a *nonce*.
+        - Add 1 to the *nonce* for next block.
+            - Add 2 to the *nonce* for the next next block.
+                - And 3 to the *nonce* for the block after that.
+                    - And so on...
+        - Encrypt the *nonce* for each block.
+        - XOR the encrypted value with plaintext for each block.
+        - This encryption and XOR can all be done in parallel, thus FAST!
 
 #### PROBLEM
 - How can I securely get the key from Alice to Bob?
