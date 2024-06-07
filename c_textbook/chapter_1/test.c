@@ -4,6 +4,7 @@
 
 int _getline(char [], int);
 void _remove(char [], int);
+void _reverse(char []);
 
 /* print the longest input line */
 int main() {
@@ -12,7 +13,8 @@ int main() {
     char line[MAXLINE];     // current input line
 
     while ((len = _getline(line, MAXLINE)) > 0) {
-        _remove(line, len);
+        _reverse(line);
+        printf("%s", line);
     }
 
     return 0; 
@@ -48,5 +50,27 @@ void _remove(char line[], int i) {
         }
         for (int j = 0; j <= i; ++j)
             printf("%d ", line[j]);
+    }
+}
+
+void _reverse(char s[]) {
+    
+    int i;
+    char temp;
+
+    for (i = 0; s[i] != '\0'; ++i);
+
+    --i;
+
+    if (s[i] == '\n') --i;
+
+    int j = 0;
+
+    while (j < i) {
+        temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+        --i;
+        ++j; 
     }
 }
