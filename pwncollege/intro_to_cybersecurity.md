@@ -250,6 +250,18 @@ Cryptography guarantees the properties of CIA.
     - Frequency analysis exploit on repeating keys
     - If we can securely transfer key and key is as long as plaintext, why not just send plaintext?
 
+### PROBLEM: 
+- How can I securely get the key from Alice to Bob?
+- If the key is just as long as the plaintext, why don't I just send the plaintext instead?
+- In order to securely communicate with someone, I have to securely exchange a key. How is this possible?
+
+### Solution: Diffie-Hellman Key Exchange
+1. Generate `p`, `g`, where `p` prime and `g` primitive root mod `p`
+2. Choose `a`, send `A = g^a % p`
+3. Choose `b`, send `B = g^b % p`
+4. `s = B^a % p` and `s = A^b % p`
+- This works because of the Discrete Log Problem. Finding `a` and `b` is extremely difficult, whereas calculating `s` is very easy.
+
 ### Encyption Properties
 - Confusion
     - Small change in key dramatically changes ciphertext
@@ -294,24 +306,9 @@ Cryptography guarantees the properties of CIA.
         - XOR the encrypted value with plaintext for each block.
         - This encryption and XOR can all be done in parallel, thus FAST!
 
-#### PROBLEM
-- How can I securely get the key from Alice to Bob?
-- If the key is just as long as the plaintext, why don't I just send the plaintext instead?
-
-### Diffie-Hellman Key Exchange
-1. Generate `p`, `g`, where `p` prime and `g` primitive root mod `p`
-2. Choose `a`, send `A = g^a % p`
-3. Choose `b`, send `B = g^b % p`
-4. `s = B^a % p` and `s = A^b % p`
-- This works because of the Discrete Log Problem. Finding `a` and `b` is extremely difficult, whereas calculating `s` is very easy.
-
 ### Asymmetric Encryption
 - Symmetric - key for both encryption and decryption
 - Asymmetric - public key for encryption, private key for decryption
-- **Fermat's Little Theorem**
-    ![Fermat's Little Theorem](/pwncollege/images/fermat_little_theorem.png)
-- **Euler's Theorem**
-    ![Euler's Theorem](/pwncollege/images/eulers_theorem.png)
 
 ### Rivest-Shamir-Adleman (RSA)
 ![RSA](/pwncollege/images/rsa.png)
@@ -352,32 +349,30 @@ Cryptography guarantees the properties of CIA.
     - SHA256
     - Password hashing with salt
     - Proof of work
-        - There is a challenge and response hashed together such that the hash value starts with a given prefix
+        - There is a challenge and response hashed together such that the hash value starts with a given prefix.
         - Used in bitcoin mining
 
 ### Trust
-- **Diffie-Hellman Key Exchange Problem**
-    - What if Mallory is an active participant, instead of a passive listener?
-    - Then Mallory can perform the key exchange HERSELF and she will know the keys for both Alice and Bob.
-    - Now Mallory can intercept their messages and decrypt it with the respective key, read it, encrypt it with the respective key, and send it to the recipient.
-    - So there is no secure communication at all. THIS IS BAD!
-- The same problem occurs with RSA
-    - Mallory can switch out the public keys.
+**Diffie-Hellman Key Exchange Problem**
+- What if Mallory is an active participant, instead of a passive listener?
+- Then Mallory can perform the key exchange HERSELF and she will know the keys for both Alice and Bob.
+- Now Mallory can intercept their messages and decrypt it with the respective key, read it, encrypt it with the respective key, and send it to the recipient.
+- So there is no secure communication at all. THIS IS BAD!
 
-How can we trust that the keys given were actually by who we intended.
+The same problem occurs with RSA. Mallory can switch out the public key with Mallory's own public key.
+
+**How can we trust the keys given to us?**
 
 **Solution: Trust**
-- We need a Root of Trust
-- The Root of Trust is the OS
-    - The OS figures out who else we can trust
-        - These trustees figure out who else we can trust
-- There is a network of trust starting from the Root of Trust
+- We need a Root of Trust.
+- The Root of Trust is the OS.
+    - The OS figures out who else we can trust.
+        - These trustees figure out who else we can trust.
+- There is a network of trust starting from the Root of Trust.
 
-What is the process of learning who we can trust?
+**What is the process of learning who we can trust?**
 
-**Hashing Certificate Data**
-
-```md
+```c
 Certificate
 {
     "name": str,
@@ -388,12 +383,14 @@ Certificate
     "signer": root
 }
 ```
+
+Hashing Certificate Data
 - Certificate ---> Hash Function ---> Hash Value
 
-**Hashing Certificate Data**
-- Hash Value ---> Sign (RSA Decrypt) ---> Signature
+Signing Certificate Data
+- Hash Value ---> Signed by Root of Trust (RSA Decrypt) ---> Signature
 
-**Certificate Verification**
+Certificate Verification
 - Certificate ---> Hash ---> X
 - Signature ---> RSA (Encrypt) ---> Y
 
