@@ -399,6 +399,8 @@ If X and Y are equal, then we can trust the public key in the certificate. This 
 ## Web Security
 One application of web security is the prevention of random people from robbing your bank acount online.
 
+A general assumption in web security is that the *victim will visit any arbitrary site*.
+
 - Web **Client** Security Considerations
     - Recieve arbitrary data from some remote server
     - Some things this data might influence client to do:
@@ -411,53 +413,90 @@ One application of web security is the prevention of random people from robbing 
         2. Interact with server system
         3. Influence other web clients
 
+---
+
 ### Injection
-- Command
-    ```bash
-    system("TZ=`whoami` date")
-    execve("/bin/sh", ["sh", "-c", "TZ=`whoami` date"], {...})
-    execve("/usr/bin/whoami", ["whoami"], {...})
-    execve("/usr/bin/date", ["date"], {"TZ": "root"})
-    ```
-    ```bash
-    system("TZ=; whoami # date")
-    execve("/bin/sh", ["sh", "-c", "TZ=; whoami # date"], {...})
-    execve("/usr/bin/whoami", ["whoami"], {...})
-    ```
-- HTML
-    ```HTML
-    html("<p>Hello, <script>alert(1)</script>!</p>")
-    ```
-    - A user sending data to a web server, for the response to only come back to the user is a futile attack. The user is only "attacking" the user.
-    - When this injection becomes dangerous is when we are able to affect other users with our data, meaning we are able to run arbitrary Javascript on their system.
-- SQL
-    ```SQL
-    ' or 1=1 --
-    ```
-    - A solution to this is to use `?`, which parses first, then fills in the data.
-- Stack Overflow ret2win
+Command
+```bash
+system("TZ=; whoami # date")
+execve("/bin/sh", ["sh", "-c", "TZ=; whoami # date"], {...})
+execve("/usr/bin/whoami", ["whoami"], {...})
+```
+---
+HTML
+```HTML
+html("<p>Hello, <script>alert(1)</script>!</p>")
+```
+- A user sending data to a web server, for the response to only come back to the user is a futile attack. The user is only "attacking" the user.
+- When this injection becomes dangerous is when we are able to affect other users with our data, meaning we are able to run arbitrary Javascript on their system.
+---
+SQL
+```SQL
+' or 1=1 --
+```
+- A solution to this is to use `?`, which parses first, then fills in the data.
+---
+Stack Overflow 
+- ret2win
+
+---
 
 ### Same-Origin Policy
-- The policy the browser uses to decide how to handle requests and responses to different origins.
-- HTTP URL
-    - `scheme://host:port/path?query#fragment`
-- Origin
-    - `(scheme, host, port)`
-- Sending HTTP Requests
-    - Same origin - anything goes
-    - Cross origin - Simple Requests allowed
-- Reading HTTP Responses
-    - Same origin - anything goes
-    - Cross origin - HTML-Embeds allowed
-- Effective Top-Level Domains + 1 = Site
-- Same-Site Cookie Attribute
-    - SameSite = None: Cookie is sent in cross-site requests
-    - SameSite = Lax: Cookie is sent in cross-site top-level navigation GET requests
-    - SameSite = Strict: Cookie is not sent in cross-site requests
-- Domain Cookie Attribute
-    - Cookie is sent in requests to specified domain and any subdomains if specified
-    - Otherwise only sent to setting host
-- Path Cookie Attribute
-    - Cookie is sent in requests to the path and any other subpath
-- Cross-Origin Resource Sharing (CORS)
-    - When making a non-simple request in a browser, the browser checks if it is allowed to make such a request.
+The policy the browser uses to decide how to handle requests and responses to different origins.
+
+---
+
+HTTP URL - `scheme://host:port/path?query#fragment`
+
+**Origin** - `(scheme, host, port)`
+
+Sending HTTP Requests
+- Same origin - anything goes
+- Cross origin - Simple Requests allowed
+
+Reading HTTP Responses
+- Same origin - anything goes
+- Cross origin - HTML-Embeds allowed
+
+---
+
+**Definition of a Site**
+```
+Domain Name                 - Labels delimited by dots:     www.example.com
+Top-Level Domain            - Right-most label of domain:   com
+Effective Top-Level Domain  - Defined by a list
+Site                        - Effective Top-Level Domain + 1 label to left
+```
+
+A site is a more relaxed version of an origin. A bunch of different origins can be the same site.
+
+---
+
+**SameSite Cookie Attribute**
+- SameSite=None
+    - Cookie is sent in cross-site requests
+- SameSite=Lax (default)
+    - Cookie is sent in cross-site *top-level navigation GET requests*
+    - *Top-level navigation GET requests* basically means clicking on a link; the url in the browser changes
+- SameSite=Strict
+    - Cookie is not sent in cross-site requests
+
+**Domain Cookie Attribute**
+- Cookie is sent in requests to any specified domain and any subdomains, otherwise cookie is only sent to setting host.
+
+**Path Cookie Attribute**
+- Cookie is sent in requests to the path and any other subpath.
+
+---
+
+### Cross-Origin Resource Sharing (CORS)
+
+Gives the ability to make non-simple requests and read more than just html-embeded responses.
+
+When making a non-simple request in a browser, the browser checks if it is allowed to make such a request.
+
+This is how it is done:
+```
+The browser makes a Preflight Request
+    - OPTIONS / HTTP/1.1
+```
