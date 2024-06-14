@@ -1,36 +1,75 @@
 #include <stdio.h>
 
-#define TAB 8   // Tab stop every 8th column
-#define IN 1    // In a string of blanks
-#define OUT 0   // Outside a string of blanks
+#define LINE_LEN 20
 
 int main() {
 
-    int c, state, tabs, spaces;
-    int space_count = 0;
+    int c;
+    char line[LINE_LEN+1]; // Array to store one line of input
 
-    state = OUT;
+    int i = 0; // Current index
+
+    int found_blank = 0; // Check whether a blank has been found on current line
+    int blank_index;
+
     while ((c = getchar()) != EOF) {
-        if (c == ' ' && state == IN)
-            space_count++;
-        else if (c == ' ') {
-            state = IN;
-            space_count++;
+
+        // Check for newline character, flush buffer and begin new line
+        if (c == '\n') {
+            line[i] = '\0';
+            puts(line);
+            i = 0;
+            found_blank = 0;
+            continue;
         }
-        else {
-            state = OUT;
-            if (space_count > 0) {
-                tabs = space_count / TAB;
-                spaces = space_count % TAB;
-                space_count = 0;
-                for (int i = 0; i < tabs; ++i) putchar('\t');
-                for (int i = 0; i < spaces; ++i) putchar(' ');
+
+        // Check for blanks, set variables accordingly
+        if (c == ' ' || c == '\t') {
+            found_blank = 1;    // Found blank is true
+            blank_index = i;
+        }
+
+        // Insert into array
+        line[i] = c;
+
+        // Line is too long
+        if ( i == LINE_LEN-1 ) 
+        { 
+            // There are blanks
+            if ( found_blank ) 
+            {
+                // Print the characters up to the last blank
+                line[blank_index] = '\0';
+                puts(line);
+                
+                // Put the rest of the characters into start of next line !!
+                int k = 0;
+                for (int j = blank_index+1; j <= i; j++) {
+                    line[k] = line[j];
+                    k++;
+                }
+
+                // Set current index
+                i = k;
+
+                found_blank = 0;
+                continue;
             }
-            putchar(c);
+            // There are no blanks
+            else 
+            {
+                // Flush buffer, reset for new line
+                line[i+1] = '\0';
+                puts(line);
+                i = 0;
+                found_blank = 0;
+                continue;
+            }
         }
+
+        // Increment array index
+        i++;
     }
 
     return 0;
 }
-
-// I FORGOT ABOUT TAB STOPS! NEED TO FACTOR THEM IN FOR THE COUNT OF TABS!

@@ -8,9 +8,9 @@
 
 The type specifier for `main()` can be missing and the program can still be compiled.
 
-What is the difference between `cc` and `gcc`?
+What is the difference between `cc` and `gcc`? A: `cc` is a link to `gcc`.
 
-A C program conists of *functions* and *variables*. Programs begin executing at the beginning of the `main` function.
+A C program consists of *functions* and *variables*. Programs begin executing at the beginning of the `main` function.
 
 `#include <stdio.h>`  tells the compiler to include information about the standard input/output library.
 
@@ -225,7 +225,7 @@ Each **local variable** in a function exists only when the function is called an
 
 Because **automatic variables** come and go with function invocation, they do not retain their values from one call to the next, and must be explicitly set upon each entry. If they are not set, they will contain garbage.
 
-**External variables** can be accessed by any function, exist permanently, and retain their values even have functions that set them have exited.
+**External variables** can be accessed by any function, exist permanently, and retain their values even when functions that set them have exited.
 
 An *external variable* must be *defined* exactly once outside of any function. The variable must also be *declared* in each function that wants to access it. The declaration may be an explicit `extern` statement and may be implicit from context.
 
