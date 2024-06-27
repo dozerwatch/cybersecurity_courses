@@ -36,6 +36,8 @@ A general rule: In any context where it is permissible to use the value of some 
 
 ## 1.4 Symbolic Constants
 
+It's bad practice to bury "magic numbers" like 300 and 20 in a program; They *convey little information* to someone who might have to read the program later, and they are *hard to change* in a systematic way.
+
 A `#define` line defines a *symbolic name* or *symbolic constant* to be a particular string of characters. 
 
 Conventionally written in upper case. 
@@ -234,3 +236,4 @@ An *external variable* must be *defined* exactly once outside of any function. T
 *Declaration* refers to places where the nature of the variable is stated but no storage is allocated.
 
 *Common practice is to place definitions of all external variables at the beginning of the source file, and then omit all extern declarations.*
+
