@@ -2,7 +2,6 @@
 - [Shellcode Injection](#shellcode-injection)
 - [Reverse Engineering](#reverse-engineering)
 - [Memory Errors](#memory-errors)
-- [Program Exploitation](#program-exploitation)
 
 ## Shellcode Injection
 Von Neumann architecture sees and stores code as data and vice versa. x86 and ARM are Von Neumann architecture.
@@ -283,5 +282,3 @@ C  doesn't clean up for you. In the example above, `foo` reads the flag onto the
 The best way to combat this is to initialize your data.
 
 Modern compiler optimizers can inadvertently cause a disclosure by uninitialized data. Say we erase all the memory after calling `foo` by adding `memset(buf, 0, 64)` in `foo`. If we optimize our code when compiling, the optimizer will remove the `memset` function as it is *really doing anything* in the optimizer's eyes.
-
-## Program Exploitation
