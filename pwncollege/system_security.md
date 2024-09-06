@@ -1,5 +1,9 @@
 # System Security
 
+- [Sandboxing](#sandboxing)
+- [Race Conditions](#race-conditions)
+- [Kernel Security](#kernel-security)
+- [System Exploitation](#system-exploitation)
 
 ## Sandboxing
 
@@ -44,5 +48,60 @@ Method 2: Superrrrrrr long paths.
 - Path size limit of 4096 bytes.
 - Bypass path size limit using symbolic links (limit of 40 symlinks).
 
+### Processes and Threads
+---
+
+Processes have their own virtual memory, registers, file descriptors, process ID, and security properties: uid, gid, seccomp rules.
+
+Nah, I'm just kidding! Haha!
+
+A process is actually made up of 1 or more threads. Every process has a main thread that has the same thread ID as the process ID. 
+
+These threads share virtual memory and file descriptors. \
+But have their own registers, stack, thread ID, and security properties: uid, gid, seccomp rules.
+
+**The execution order between theads is not deterministic!**
+
+How to make a thread? \
+Threads are created using the `clone` syscall, the successor of `fork`, allowing for control over what is shared between parent and child.
+
+Threads often communicate using *global* variables. This can lead to a TOCTOU vulnerability.
+
+There are some differences between libc and syscall functions. \
+libc `setuid()` sets UID of *all* threads. \
+syscall `setuid()` sets UID of *only* caller thread.
+
+libc `exit()` calls `exit_group()` to terminate *all* threads.
+syscall `exit()` terminates *only* caller thread.
+
+### Races in Memory
+---
+The *filesystem* is a common race condition battleground because it is a shared resource between *processes*.
+
+The *memory* is a common race condition battleground because it is a shared resource between *threads*.
+
+TOCTOU attacks are possible for both race conditions.
+
+**Double Fetch**: Special case of TOCTOU. Bypass a check on first fetch and change important variable before second fetch.
+
+**Data Races**: In a process with two threads that each increment by 1 then decrement by 1 a variable `num` infinitely, it is expected that `num = 0` always. However, because execution order between threads is nondeterministic, there are cases where `num` increases infinitely, or decreases infinitely, or more.
+
+Data races can be prevented using **mutexes** which locks a block of code from being executed by another thread if one thread is executing it already. This block of code is called a *critical section*.
+
+### Signals and Reentrancy
+---
+Processes can register signal handlers to handle any signal except SIGKILL and SIGSTOP.
+
+Signals *immediately* pause process execution and invoke the handler function.
+
+You can send *any* signal to *any* process at *any* time with the same rUID as you. This means you can cause a program to suddenly divert execution to the handler. So you can make code execution nondeterministic, creating a race condition using signals.
+
+This problem can be solved with reentrant functions. These are functions that would operate properly even when interrupted with an instance of themselves. *I am still confused on this part but am skipping over it because it isn't used in the challenges*.
+
+
+
+## Kernel Security
+
+## System Exploitation
 
 
