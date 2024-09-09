@@ -98,9 +98,9 @@ You can send *any* signal to *any* process at *any* time with the same rUID as y
 
 This problem can be solved with reentrant functions. These are functions that would operate properly even when interrupted with an instance of themselves. *I am still confused on this part but am skipping over it because it isn't used in the challenges*.
 
-
-
 ## Kernel Security
+
+
 
 ## System Exploitation
 
