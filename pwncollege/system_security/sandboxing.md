@@ -42,3 +42,6 @@ Sandboxing is *extremely* effective. There are several mitigations that are so e
 Sandboxes are a strong mitigation:
 - need one set of vulnerability to exploit sandboxed process
 - need another set of vulnerability to break out of sandbox
+
+## chroot
+
