@@ -62,11 +62,11 @@ Session ID help combat the security concerns of using raw state in cookies.
 ### Linux Processes
 We are **not** allowed to manipulate hardware directly, instead we have to talk to the **OS** using `syscalls`.
 
-The **kernal** keeps track of the state of processes. Processes are just **blobs of data** living in kernal memory, which is located at the bottom of memory (high address).
+The **kernel** keeps track of the state of processes. Processes are just **blobs of data** living in kernal memory, which is located at the bottom of memory (high address).
 
 `syscalls` just manipulate this kernal memory. 
 
-The **kernal**, in some sense, is a library of code. A `syscall` basically redirects control flow into kernal controlled code.
+The **kernel**, in some sense, is a library of code. A `syscall` basically redirects control flow into kernel controlled code.
 
 `struct task_struct` is the blob is data managing the state of a process in kernal memory.
 

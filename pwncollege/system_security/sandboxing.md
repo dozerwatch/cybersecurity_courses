@@ -45,3 +45,10 @@ Sandboxes are a strong mitigation:
 
 ## chroot
 
+A traditional sandboxing technique is to use `chroot`, which first appeared in Unix in 1979.
+
+All `chroot` does is change the meaning of `/` for a process and its children. It changes the root `/` to be another directory specified in its first and only argument.
+
+This used to be the de-facto way to sandbox, but it is not a very good sandbox for many reasons. Now it is obsolete.
+
+Only privileged users like root can run `chroot`.
