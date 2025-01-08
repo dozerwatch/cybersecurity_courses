@@ -49,8 +49,20 @@ Big Idea: Function is Data. \
 There is naturally a brick wall separating `things` (nouns, data) and `actions` (verbs, procedures). 
 
 Simple Idea: Generalizing Patterns \
-We can generalize similar functions into one function with more arguments. These arguments can be a number, a function, 
+We can generalize similar functions into one function with more arguments. These arguments can be a number or a function.
 
+`lambda` is the way to make a procedure. These two `define`'s are EQUAL.
+```scheme
+(define (square x) (* x x))
+(define square (lambda (x) (* x x)))
+```
+`lambda` is usually used as an argument to a procedure.
+
+Higher-order procedures either take a procedure as its argument or returns a procedure as its value. 
+
+Generalizing patterns is good for keeping programs from getting too long.
+
+## Lecture 4: Higher-Order Procedures 2
 
 
 
