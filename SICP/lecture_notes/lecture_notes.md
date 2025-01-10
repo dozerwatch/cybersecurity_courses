@@ -1,5 +1,3 @@
-# Building Abstractions with Procedures 
-
 ## Lecture 1: Functional Programming 1
 
 `00:00 - 19:14` Go over basic Scheme syntax. 
@@ -8,7 +6,8 @@
 
 `32:00 - 34:29` Vocabulary Lesson: formal parameter, body, actual argument expression, actual argument value
 
-`35:00 - End` Examples of procedures: plural, pig-latin 
+`35:00 - End` Examples of procedures: plural,
+ pig-latin 
 
 This lecture was mostly a review of the Scheme language and how procedures work in Scheme, along with some procedure examples. There was also administrative stuff.
 
