@@ -334,3 +334,38 @@ Order of growth generally measures the amount of resources required by a process
 ```
 
 ### 1.2.5 Greatest Common Divisors
+
+```scheme
+; Iterative process
+; O(log n)
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+```
+
+### 1.2.6 Example: Testing for Primality
+```scheme
+; O(√n)
+(define (smallest-divisor n)
+    (define (find-divisor n test-divisor)
+        (cond ((> (square test-divisor) n) 
+                n)
+                ((divides? test-divisor n) 
+                test-divisor)
+                (else (find-divisor 
+                    n 
+                    (+ test-divisor 1)))))
+    (find-divisor n 2))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+```
+
+Fermat's Little Theorem: \
+If $a$ is a prime number and $n$ is any positive integer less than $a$, then $n^a \cong n$ mod $a$.
+
+```scheme
+; O(log n)
+
+```
